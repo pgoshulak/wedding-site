@@ -1,15 +1,40 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
+import Home from '@/components/pages/Home'
+import OurStory from '@/components/pages/OurStory'
+import Location from '@/components/pages/Location'
+import Accommodations from '@/components/pages/Accommodations'
+import Rsvp from '@/components/pages/Rsvp'
 
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
-      name: 'Hello',
-      component: Hello
+      name: 'Home',
+      component: Home
+    },
+    {
+      path: '/our-story',
+      name: 'OurStory',
+      component: OurStory
+    },
+    {
+      path: '/location',
+      name: 'Location',
+      component: Location
+    },
+    {
+      path: '/accommodations',
+      name: 'Accommodations',
+      component: Accommodations
+    },
+    {
+      path: '/rsvp',
+      name: 'RSVP',
+      component: Rsvp
     }
   ]
 })

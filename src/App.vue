@@ -1,54 +1,54 @@
 <template>
   <div id="app">
     <header>
-      <span>Vue.js PWA</span>
     </header>
-    <main>
-      <img src="./assets/logo.png" alt="Vue.js PWA">
-      <router-view></router-view>
+
+    <main class="md-layout">
+      <div class="spacer md-layout-item md-xsmall-hide"></div>
+      <md-content class="md-layout-item md-size-70 md-large-size-70 md-medium-size-80 md-small-size-90 md-xsmall-size-100">
+        <!--<div id="header-img">
+          <img src="./assets/hug375.jpg" alt="hug image">
+        </div> -->
+        <banner-image></banner-image>
+
+        <header-nav></header-nav>
+
+        <router-view></router-view>
+      </md-content>
+      <div class="spacer md-layout-item md-xsmall-hide"></div>
     </main>
   </div>
 </template>
 
 <script>
+import BannerImage from './components/static/BannerImage.vue'
+import HeaderNav from './components/static/HeaderNav.vue'
 export default {
-  name: 'app'
+  name: 'app',
+  components: {
+    BannerImage,
+    HeaderNav
+  }
 }
 </script>
 
-<style>
+<style lang="scss">
+@import "style.scss";
+
 body {
-  margin: 0;
+  background-color: $background;
+  overflow-x: hidden;
 }
 
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-}
-
-main {
-  text-align: center;
-  margin-top: 40px;
-}
-
-header {
-  margin: 0;
-  height: 56px;
-  padding: 0 16px 0 24px;
-  background-color: #35495E;
-  color: #ffffff;
-}
-
-header span {
+#header-img {
   display: block;
-  position: relative;
-  font-size: 20px;
-  line-height: 1;
-  letter-spacing: .02em;
-  font-weight: 400;
-  box-sizing: border-box;
-  padding-top: 16px;
+  margin: auto;
+  width: 200px;
+  height: 200px;
+  img {
+    border-radius: 50%;
+    border: 15px solid $accent;
+  }
 }
+
 </style>
