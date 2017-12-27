@@ -1,7 +1,7 @@
 <template>
   <div>
-    <md-menu>
-      <md-button id="nav-drawer-button" class="md-raised md-primary md-icon-button" md-menu-trigger>
+    <md-menu id="nav-menu">
+      <md-button id="nav-menu-button" class="md-raised md-primary md-icon-button" md-menu-trigger>
         <md-icon>menu</md-icon>
       </md-button>
 
@@ -18,12 +18,12 @@
 <script>
   export default {
     name: 'HeaderNavDrawer',
-    props: { links: [] }
+    props: ['links']
   }
 </script>
 
 <style scoped>
-#nav-drawer-button {
+#nav-menu {
   position: fixed;
   right: 10px;
   top: 10px;

@@ -6,9 +6,6 @@
     <main class="md-layout">
       <div class="spacer md-layout-item md-xsmall-hide"></div>
       <md-content class="md-layout-item md-size-70 md-large-size-70 md-medium-size-80 md-small-size-90 md-xsmall-size-100">
-        <!--<div id="header-img">
-          <img src="./assets/hug375.jpg" alt="hug image">
-        </div> -->
         <banner-image></banner-image>
 
         <header-nav></header-nav>

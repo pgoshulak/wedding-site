@@ -2,6 +2,7 @@
   <div id="banner-image">
     <img src="../../assets/banner.jpg" alt="banner image">
     <div id="title-text" class="md-display-2">Steph &amp; Peter</div>
+    <a id="caption-text" class="md-caption" target="_blank" href="https://www.instagram.com/jasonsuperchan/">@jasonsuperchan</a>
   </div>
 </template>
 
@@ -32,5 +33,12 @@ img {
   left: 10px;
   color: white;
   opacity: 0.9;
+}
+#caption-text {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  color: white;
+  opacity: 0.5;
 }
 </style>

@@ -41,9 +41,9 @@ export default {
           to: 'accommodations'
         },
         {
-          id: 'gifts',
+          id: 'registry',
           label: 'Registry',
-          to: 'gifts'
+          to: 'registry'
         },
         {
           id: 'photos',

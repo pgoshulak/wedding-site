@@ -18,7 +18,7 @@
 <script>
   export default {
     name: 'HeaderNavTabs',
-    props: { links: [] }
+    props: ['links']
   }
 </script>
 

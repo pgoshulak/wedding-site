@@ -5,6 +5,8 @@ import OurStory from '@/components/pages/OurStory'
 import Location from '@/components/pages/Location'
 import Accommodations from '@/components/pages/Accommodations'
 import Rsvp from '@/components/pages/Rsvp'
+import Registry from '@/components/pages/registry'
+import Photos from '@/components/pages/photos'
 
 Vue.use(Router)
 
@@ -35,6 +37,16 @@ export default new Router({
       path: '/rsvp',
       name: 'RSVP',
       component: Rsvp
+    },
+    {
+      path: '/registry',
+      name: 'Registry',
+      component: Registry
+    },
+    {
+      path: '/photos',
+      name: 'Photos',
+      component: Photos
     }
   ]
 })
