@@ -9,8 +9,9 @@
         <banner-image></banner-image>
 
         <header-nav></header-nav>
-
-        <router-view></router-view>
+        <div id="router-view-container">
+          <router-view></router-view>
+        </div>
       </md-content>
       <div class="spacer md-layout-item md-xsmall-hide"></div>
     </main>
@@ -36,16 +37,12 @@ body {
   background-color: $background;
   overflow-x: hidden;
 }
-
-#header-img {
-  display: block;
-  margin: auto;
-  width: 200px;
-  height: 200px;
-  img {
-    border-radius: 50%;
-    border: 15px solid $accent;
-  }
+input {
+  /* Prevent Safari from auto-zoom on input select */
+  font-size: initial !important;
+}
+#router-view-container {
+  padding: 4px;
 }
 
 </style>

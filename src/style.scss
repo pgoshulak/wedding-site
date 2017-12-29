@@ -1,7 +1,7 @@
 @import "~vue-material/dist/theme/engine";
 
 $primary: md-get-palette-color(pink, 100);
-$accent: md-get-palette-color(lightgreen, A100);
+$accent: md-get-palette-color(lightgreen, A200);
 $background: md-get-palette-color(amber, 50);
 
 @include md-register-theme("default", (
