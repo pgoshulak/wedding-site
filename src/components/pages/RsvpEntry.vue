@@ -5,29 +5,29 @@
         <span class="md-title">{{result.data.name}}</span>
       </div>
       <div class="md-layout-item md-size-20 md-xsmall-size-100">
-        <md-switch v-model="rsvp" @change="saved=false">{{rsvpText}}</md-switch>
+        <md-switch v-model="rsvp" @change="registerUnsavedChange">{{rsvpText}}</md-switch>
       </div>
       <div class="md-layout-item md-size-20 md-xsmall-size-100">
-        <md-radio v-for="opt in foodOptions" :key="opt.name" v-model="food" :value="opt.name" @change="saved=false">{{opt.name}}
+        <md-radio v-for="opt in foodOptions" :key="opt.name" v-model="food" :value="opt.name" @change="registerUnsavedChange">{{opt.name}}
           <md-tooltip>{{opt.desc}}</md-tooltip>
         </md-radio>
       </div>
       <div class="md-layout-item md-size-30 md-xsmall-size-100">
         <md-field :md-counter="false">
           <label>Food Restrictions <small>(optional)</small></label>
-          <md-input v-model="restrictions" @change="saved=false" maxlength="80"></md-input>
+          <md-input v-model="restrictions" @change="registerUnsavedChange" maxlength="80"></md-input>
         </md-field>
       </div>
       <div class="md-layout-item md-size-40 md-xsmall-size-100">
         <md-field :md-counter="false">
           <label>Email <small>(optional)</small></label>
-          <md-input v-model="email" @change="saved=false" maxlength="80"></md-input>
+          <md-input v-model="email" @change="registerUnsavedChange" maxlength="80"></md-input>
         </md-field>
       </div>
       <div class="md-layout-item md-size-40 md-xsmall-size-100">
         <md-field :md-counter="false">
           <label>Comment <small>(optional)</small></label>
-          <md-input v-model="comment" @change="saved=false" maxlength="140"></md-input>
+          <md-input v-model="comment" @change="registerUnsavedChange" maxlength="140"></md-input>
         </md-field>
       </div>
       <div class="md-layout-item md-size-20 md-xsmall-size-100">
@@ -97,13 +97,13 @@
           timestamp: new Date()
         }, {merge: true}).then(() => {
           this.saved = true
+          this.$emit('saveChanges', this.result.id)
           this.popupSnackbar(`Successfully saved ${this.result.data.name}!`)
         }).catch((err) => {
           console.log('error was caught')
           console.log(err)
           this.popupSnackbar(`Error! ${err.message}`)
         })
-        return true
       },
       populateData () {
         if (this.result.data.rsvp === undefined) this.rsvp = false; else this.rsvp = this.result.data.rsvp
@@ -120,6 +120,10 @@
       popupSnackbar (msg) {
         this.snackbarMessage = msg
         this.showSnackbar = true
+      },
+      registerUnsavedChange () {
+        this.saved = false
+        this.$emit('newUnsavedChange', this.result.id)
       }
     },
     created () {

@@ -1,7 +1,7 @@
 <template>
   <div id="rsvp">
     <h3 class="md-display-1">RSVP</h3>
-    <!-- <h4 class="md-subheading" v-if="searchResults.length==0">Please enter your Postal/Zip code</h4> -->
+    
     <md-empty-state v-if="searchResults.length==0" 
       md-icon="search" md-label="Please enter your Postal/Zip code" md-description="Your postal/zip code is used to enter your RSVP">
       <md-field>
@@ -9,14 +9,30 @@
         <md-input v-model="postCodeSearch" @keyup.enter="searchPostCode"></md-input>
       </md-field>
     </md-empty-state>
+
     <div v-if="searchResults.length">
-      <rsvp-entry v-for="result in searchResults" :key="result.id" :result="result" :db="db"></rsvp-entry>
+      <rsvp-entry v-for="result in searchResults" 
+        :key="result.id" 
+        :result="result" 
+        :db="db"
+        @newUnsavedChange="addUnsavedChange"
+        @saveChanges="saveChanges"
+        ></rsvp-entry>
     </div>
+
+    <md-dialog :md-active.sync="showDialogDiscardChanges">
+      <md-dialog-title>You have unsaved changes!</md-dialog-title>
+      <md-dialog-content>You have unsaved changes! Discard or continue editing?</md-dialog-content>
+      <md-dialog-actions>
+        <md-button @click="navDiscardChanges">Discard Changes</md-button>
+        <md-button class="md-accent md-raised" @click="navContinueEditing">Continue Editing</md-button>
+      </md-dialog-actions>
+    </md-dialog>
   </div>
 </template>
 
 <script>
-// import db from '../../../service/firebase.js'
+import {apiKey as API_KEY} from '../../../service/firebase.js'
 import * as firebase from 'firebase'
 import 'firebase/firestore'
 import RsvpEntry from './RsvpEntry'
@@ -27,7 +43,10 @@ export default {
     return {
       db: null,
       postCodeSearch: '',
-      searchResults: []
+      searchResults: [],
+      unsavedChanges: [],
+      showDialogDiscardChanges: false,
+      nextNavRouteFcn: null
     }
   },
   computed: {
@@ -50,18 +69,57 @@ export default {
         }).catch((err) => {
           console.log('Error searching for ' + this.postCodeSearch, err)
         })
+    },
+    addUnsavedChange (guestId) {
+      // Register an unsaved change for the associated GuestId (add to running tally of unsaved changes)
+      if (!this.unsavedChanges.includes(guestId)) {
+        this.unsavedChanges.push(guestId)
+      }
+    },
+    saveChanges (guestId) {
+      // Register that the GuestId has been saved
+      let index = this.unsavedChanges.indexOf(guestId)
+      this.unsavedChanges.splice(index, 1)
+    },
+    navContinueEditing () {
+      // Clear 'next' route
+      this.nextNavRouteFcn = null
+      this.showDialogDiscardChanges = false
+    },
+    navDiscardChanges () {
+      // Go to 'next' route
+      this.nextNavRouteFcn()
+      this.showDialogDiscardChanges = false
     }
   },
   created () {
-    firebase.initializeApp({
-      apiKey: 'AIzaSyAYI6g6LhzhqAQVnRxCyzoz_N-aWVh45xw',
-      authDomain: 'peeph-wedding.firebaseapp.com',
-      projectId: 'peeph-wedding'
-    })
+    if (!firebase.apps.length) {
+      firebase.initializeApp({
+        apiKey: API_KEY,
+        authDomain: 'peeph-wedding.firebaseapp.com',
+        projectId: 'peeph-wedding'
+      })
+    }
     this.db = firebase.firestore()
   },
   components: {
     RsvpEntry
+  },
+  beforeRouteLeave (to, from, next) {
+    if (this.unsavedChanges.length === 0) {
+      next()
+    } else {
+      // Store 'next' route
+      this.nextNavRouteFcn = next
+      // Show dialog
+      this.showDialogDiscardChanges = true
+      /* const answer = window.confirm('Do you really want to leave? you have unsaved changes!')
+      if (answer) {
+        next()
+      } else {
+        next(false)
+      } */
+    }
   }
 }
 </script>
