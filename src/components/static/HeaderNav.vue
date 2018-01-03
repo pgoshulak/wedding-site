@@ -49,6 +49,11 @@ export default {
           id: 'photos',
           label: 'Photos',
           to: 'photos'
+        },
+        {
+          id: 'admin',
+          label: 'Admin',
+          to: 'admin'
         }
       ]
     }
