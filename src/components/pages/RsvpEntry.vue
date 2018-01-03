@@ -4,27 +4,33 @@
       <div class="md-layout-item md-size-100">
         <span class="md-title">{{result.data.name}}</span>
       </div>
-      <div class="md-layout-item md-size-20 md-xsmall-size-100">
+      <div class="md-layout-item md-size-25 md-xsmall-size-100">
         <md-switch v-model="rsvp" @change="registerUnsavedChange">{{rsvpText}}</md-switch>
       </div>
-      <div class="md-layout-item md-size-20 md-xsmall-size-100">
+      <div class="md-layout-item md-size-25 md-xsmall-size-100">
         <md-radio v-for="opt in foodOptions" :key="opt.name" v-model="food" :value="opt.name" @change="registerUnsavedChange">{{opt.name}}
           <md-tooltip>{{opt.desc}}</md-tooltip>
         </md-radio>
       </div>
-      <div class="md-layout-item md-size-30 md-xsmall-size-100">
+      <div class="md-layout-item md-size-50 md-xsmall-size-100">
         <md-field :md-counter="false">
           <label>Food Restrictions <small>(optional)</small></label>
           <md-input v-model="restrictions" @change="registerUnsavedChange" maxlength="80"></md-input>
         </md-field>
       </div>
-      <div class="md-layout-item md-size-40 md-xsmall-size-100">
+      <div class="md-layout-item md-size-50 md-xsmall-size-100">
         <md-field :md-counter="false">
           <label>Email <small>(optional)</small></label>
           <md-input v-model="email" @change="registerUnsavedChange" maxlength="80"></md-input>
         </md-field>
       </div>
-      <div class="md-layout-item md-size-40 md-xsmall-size-100">
+      <div class="md-layout-item md-size-50 md-xsmall-size-100">
+        <md-field :md-counter="false">
+          <label>Song request <small>(optional)</small></label>
+          <md-input v-model="song" @change="registerUnsavedChange" maxlength="80"></md-input>
+        </md-field>
+      </div>
+      <div class="md-layout-item md-size-80 md-xsmall-size-100">
         <md-field :md-counter="false">
           <label>Comment <small>(optional)</small></label>
           <md-input v-model="comment" @change="registerUnsavedChange" maxlength="140"></md-input>
@@ -52,6 +58,7 @@
         food: null,
         restrictions: '',
         email: '',
+        song: '',
         comment: '',
         saved: true,
         foodOptions: [
@@ -93,6 +100,7 @@
           food: this.food,
           restrictions: this.restrictions,
           email: this.email,
+          song: this.song,
           comment: this.comment,
           timestamp: new Date()
         }, {merge: true}).then(() => {
@@ -110,12 +118,8 @@
         if (this.result.data.food === undefined) this.food = 'None'; else this.food = this.result.data.food
         if (this.result.data.restrictions === undefined) this.restrictions = ''; else this.restrictions = this.result.data.restrictions
         if (this.result.data.email === undefined) this.email = ''; else this.email = this.result.data.email
+        if (this.result.data.song === undefined) this.song = ''; else this.song = this.result.data.song
         if (this.result.data.comment === undefined) this.comment = ''; else this.comment = this.result.data.comment
-        /* this.rsvp = this.result.data.rsvp
-        this.food = this.result.data.food
-        this.restrictions = this.result.data.restrictions
-        this.email = this.result.data.email
-        this.comment = this.result.data.comment */
       },
       popupSnackbar (msg) {
         this.snackbarMessage = msg

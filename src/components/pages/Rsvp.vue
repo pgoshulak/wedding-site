@@ -1,16 +1,22 @@
 <template>
   <div id="rsvp">
     <h3 class="md-display-1">RSVP</h3>
-    
+
+    <!-- Initial state, no search results -->
     <md-empty-state v-if="searchResults.length==0" 
-      md-icon="search" md-label="Please enter your Postal/Zip code" md-description="Your postal/zip code is used to enter your RSVP">
+      md-icon="search" 
+      md-label="Please enter your Postal/Zip code" 
+      md-description="You will be able to RSVP for yourself and all your guests">
       <md-field>
         <label>Postal/Zip Code</label>
-        <md-input v-model="postCodeSearch" @keyup.enter="searchPostCode"></md-input>
+        <md-input id="postCodeSearchInput" v-model="postCodeSearch" @keyup.enter="searchPostCode"></md-input>
       </md-field>
+      <md-button id="btnSearchPostCode" class="md-primary md-raised" @click="searchPostCode">Search!</md-button>
     </md-empty-state>
 
+    <!-- Search results -->
     <div v-if="searchResults.length">
+      <p>{{searchResults.length}} guest(s) found for {{postCodeSearch}}</p>
       <rsvp-entry v-for="result in searchResults" 
         :key="result.id" 
         :result="result" 
@@ -20,6 +26,7 @@
         ></rsvp-entry>
     </div>
 
+    <!-- Dialog for route-guard against leaving unsaved changes -->
     <md-dialog :md-active.sync="showDialogDiscardChanges">
       <md-dialog-title>You have unsaved changes!</md-dialog-title>
       <md-dialog-content>You have unsaved changes! Discard or continue editing?</md-dialog-content>
@@ -28,6 +35,12 @@
         <md-button class="md-accent md-raised" @click="navContinueEditing">Continue Editing</md-button>
       </md-dialog-actions>
     </md-dialog>
+
+    <!-- Snackbar popup for 'no results found' -->
+    <md-snackbar :md-duration="4000" :md-active.sync="showSnackbarNoResults" md-persistent>
+      No results found for {{postCodeSearch}}. Make sure you typed it correctly!
+      <md-button class="md-primary" @click="showSnackbarNoResults = false">Dismiss</md-button>
+    </md-snackbar>
   </div>
 </template>
 
@@ -46,6 +59,7 @@ export default {
       searchResults: [],
       unsavedChanges: [],
       showDialogDiscardChanges: false,
+      showSnackbarNoResults: false,
       nextNavRouteFcn: null
     }
   },
@@ -60,6 +74,9 @@ export default {
       let guestsRef = this.db.collection('guests')
       guestsRef.where('postcode', '==', this.postCodeSearchClean)
         .get().then((snap) => {
+          if (snap.empty) {
+            this.showSnackbarNoResults = true
+          }
           snap.forEach((docRef) => {
             this.searchResults.push({
               id: docRef.id,
@@ -101,6 +118,9 @@ export default {
       })
     }
     this.db = firebase.firestore()
+  },
+  mounted () {
+    document.getElementById('postCodeSearchInput').scrollIntoView()
   },
   components: {
     RsvpEntry
