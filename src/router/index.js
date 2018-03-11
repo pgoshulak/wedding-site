@@ -9,9 +9,9 @@ const OurStory = () => import('@/components/pages/OurStory')
 const Location = () => import('@/components/pages/Location')
 const Accommodations = () => import('@/components/pages/Accommodations')
 const Rsvp = () => import('@/components/pages/Rsvp')
-const Registry = () => import('@/components/pages/registry')
-const Photos = () => import('@/components/pages/photos')
-const Admin = () => import('@/components/pages/admin')
+const Registry = () => import('@/components/pages/Registry')
+const Photos = () => import('@/components/pages/Photos')
+const Admin = () => import('@/components/pages/Admin')
 
 Vue.use(Router)
 
