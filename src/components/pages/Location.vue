@@ -1,35 +1,13 @@
 <template>
   <div id="home">
     <h3 class="md-display-1">Location</h3>
-    <!-- <md-button class="md-accent">hi there</md-button> -->
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
+    <p>Steph and Peter will be married at <em>Earth to Table: The Farm</em>, near Hamilton ON.</p>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'Home'
+    name: 'Location'
   }
 </script>
 

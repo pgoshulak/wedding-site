@@ -1,30 +1,8 @@
 <template>
   <div id="home">
-    <h3 class="md-display-1">Steph &amp; Peter</h3>
-    <!-- <md-button class="md-accent">hi there</md-button> -->
+    <h3 class="md-display-1">Saturday June 1, 2019 4:00pm</h3>
     <Countdown></Countdown>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
-    <p>some text here</p>
+    
   </div>
 </template>
 
