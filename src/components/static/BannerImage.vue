@@ -7,8 +7,17 @@
 </template>
 
 <script>
+  import config from '../../../config'
   export default {
-    name: 'BannerImage'
+    name: 'BannerImage',
+    data () {
+      return {
+        config: config
+      }
+    },
+    created () {
+      console.log(config)
+    }
   }
 </script>
 
@@ -25,7 +34,8 @@ img {
   position: absolute;
   object-fit: cover;
   top: -60%;
-  width: 100%
+  width: 100%;
+  filter: blur(15px);
 }
 #title-text {
   position: absolute;
