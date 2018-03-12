@@ -4,16 +4,6 @@ import {pw as ADMIN_PASSWORD} from '../../service/firebase.js'
 
 const DEV_MODE_SKIP_ADMIN_PASSWORD = false
 
-<<<<<<< HEAD
-const Home = () => import('@/components/pages/Home')
-const OurStory = () => import('@/components/pages/OurStory')
-const Location = () => import('@/components/pages/Location')
-const Accommodations = () => import('@/components/pages/Accommodations')
-const Rsvp = () => import('@/components/pages/Rsvp')
-const Registry = () => import('@/components/pages/Registry')
-const Photos = () => import('@/components/pages/Photos')
-const Admin = () => import('@/components/pages/Admin')
-=======
 const Home = () => import('@/components/pages/Home' /* webpackChunkName: "chunk-home" */)
 const OurStory = () => import('@/components/pages/OurStory' /* webpackChunkName: "chunk-our-story" */)
 const Location = () => import('@/components/pages/Location' /* webpackChunkName: "chunk-location" */)
@@ -22,7 +12,6 @@ const Rsvp = () => import('@/components/pages/Rsvp' /* webpackChunkName: "chunk-
 const Registry = () => import('@/components/pages/registry' /* webpackChunkName: "chunk-registry" */)
 const Photos = () => import('@/components/pages/photos' /* webpackChunkName: "chunk-photos" */)
 const Admin = () => import('@/components/pages/admin' /* webpackChunkName: "chunk-admin" */)
->>>>>>> webpack-chunking
 
 Vue.use(Router)
 
