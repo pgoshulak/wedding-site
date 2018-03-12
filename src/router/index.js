@@ -2,21 +2,21 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import {pw as ADMIN_PASSWORD} from '../../service/firebase.js'
 
-const DEV_MODE_SKIP_ADMIN_PASSWORD = true
+const DEV_MODE_SKIP_ADMIN_PASSWORD = false
 
-const Home = () => import('@/components/pages/Home')
-const OurStory = () => import('@/components/pages/OurStory')
-const Location = () => import('@/components/pages/Location')
-const Accommodations = () => import('@/components/pages/Accommodations')
-const Rsvp = () => import('@/components/pages/Rsvp')
-const Registry = () => import('@/components/pages/registry')
-const Photos = () => import('@/components/pages/photos')
-const Admin = () => import('@/components/pages/admin')
+const Home = () => import('@/components/pages/Home' /* webpackChunkName: "chunk-home" */)
+const OurStory = () => import('@/components/pages/OurStory' /* webpackChunkName: "chunk-our-story" */)
+const Location = () => import('@/components/pages/Location' /* webpackChunkName: "chunk-location" */)
+const Accommodations = () => import('@/components/pages/Accommodations' /* webpackChunkName: "chunk-accomodations" */)
+const Rsvp = () => import('@/components/pages/Rsvp' /* webpackChunkName: "chunk-rsvp" */)
+const Registry = () => import('@/components/pages/registry' /* webpackChunkName: "chunk-registry" */)
+const Photos = () => import('@/components/pages/photos' /* webpackChunkName: "chunk-photos" */)
+const Admin = () => import('@/components/pages/admin' /* webpackChunkName: "chunk-admin" */)
 
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  // mode: 'history',
   routes: [
     {
       path: '/',
