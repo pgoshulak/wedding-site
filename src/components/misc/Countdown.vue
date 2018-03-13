@@ -22,7 +22,7 @@
         if (days < 31) return `${days} days to go, it's this month!`
         if (days < 60) return `${days} days to go, a couple months away!`
         if (days < 365) return `${days} days to go, less than a year now!`
-        return `${days} to go, over a year still!`
+        return `${days} days to go, over a year still!`
       }
     }
   }

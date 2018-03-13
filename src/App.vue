@@ -42,7 +42,10 @@ input {
   font-size: initial !important;
 }
 #router-view-container {
-  padding: 4px;
+  padding: 4px 4px 50px;
+}
+main {
+  min-height: 100vh
 }
 
 </style>
