@@ -1,22 +1,18 @@
 <template>
   <div id="banner-image">
-    <img src="../../assets/banner.jpg" alt="banner image">
+    <img :class="nodeEnv" src="../../assets/banner.jpg" alt="banner image">
     <div id="title-text" class="md-display-2">Steph &amp; Peter</div>
     <a id="caption-text" class="md-caption" target="_blank" href="https://www.instagram.com/jasonsuperchan/">@jasonsuperchan</a>
   </div>
 </template>
 
 <script>
-  import config from '../../../config'
   export default {
     name: 'BannerImage',
     data () {
       return {
-        config: config
+        nodeEnv: process.env.NODE_ENV
       }
-    },
-    created () {
-      console.log(config)
     }
   }
 </script>
@@ -35,7 +31,9 @@ img {
   object-fit: cover;
   top: -60%;
   width: 100%;
-  filter: blur(15px);
+  &.development {
+    filter: blur(15px);
+  }
 }
 #title-text {
   position: absolute;
