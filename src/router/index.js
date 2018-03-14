@@ -9,9 +9,9 @@ const OurStory = () => import('@/components/pages/OurStory' /* webpackChunkName:
 const Location = () => import('@/components/pages/Location' /* webpackChunkName: "chunk-location" */)
 const Accommodations = () => import('@/components/pages/Accommodations' /* webpackChunkName: "chunk-accomodations" */)
 const Rsvp = () => import('@/components/pages/Rsvp' /* webpackChunkName: "chunk-rsvp" */)
-const Registry = () => import('@/components/pages/registry' /* webpackChunkName: "chunk-registry" */)
-const Photos = () => import('@/components/pages/photos' /* webpackChunkName: "chunk-photos" */)
-const Admin = () => import('@/components/pages/admin' /* webpackChunkName: "chunk-admin" */)
+const Registry = () => import('@/components/pages/Registry' /* webpackChunkName: "chunk-registry" */)
+const Photos = () => import('@/components/pages/Photos' /* webpackChunkName: "chunk-photos" */)
+const Admin = () => import('@/components/pages/Admin' /* webpackChunkName: "chunk-admin" */)
 
 Vue.use(Router)
 
