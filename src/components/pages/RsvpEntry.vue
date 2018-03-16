@@ -5,7 +5,9 @@
         <span class="md-title">{{result.data.name}}</span>
       </div>
       <div class="md-layout-item md-size-25 md-xsmall-size-100">
-        <md-switch v-model="rsvp" @change="registerUnsavedChange">{{rsvpText}}</md-switch>
+        <!-- <md-switch v-model="rsvp" @change="registerUnsavedChange">{{rsvpText}}</md-switch> -->
+        <md-radio v-model="rsvp" :value="true" change="registerUnsavedChange">{{rsvpTextTrue}}</md-radio>
+        <md-radio v-model="rsvp" :value="false" change="registerUnsavedChange">{{rsvpTextFalse}}</md-radio>
       </div>
       <!-- <div class="md-layout-item md-size-25 md-xsmall-size-100">
         <md-radio v-for="opt in foodOptions" :key="opt.name" v-model="food" :value="opt.name" @change="registerUnsavedChange">{{opt.name}}
@@ -80,7 +82,7 @@
       }
     },
     computed: {
-      rsvpText () {
+      /* rsvpText () {
         switch (this.rsvp) {
           case true:
             return 'Attending'
@@ -90,6 +92,20 @@
             return 'error[on]'
           default:
             return 'error[default]'
+        }
+      } */
+      rsvpTextTrue () {
+        if (this.rsvp) {
+          return 'Attending :)'
+        } else {
+          return 'Attending'
+        }
+      },
+      rsvpTextFalse () {
+        if (this.rsvp) {
+          return 'Not Attending'
+        } else {
+          return 'Not Attending :('
         }
       }
     },
