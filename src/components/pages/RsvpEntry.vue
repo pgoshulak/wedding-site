@@ -7,12 +7,12 @@
       <div class="md-layout-item md-size-25 md-xsmall-size-100">
         <md-switch v-model="rsvp" @change="registerUnsavedChange">{{rsvpText}}</md-switch>
       </div>
-      <div class="md-layout-item md-size-25 md-xsmall-size-100">
+      <!-- <div class="md-layout-item md-size-25 md-xsmall-size-100">
         <md-radio v-for="opt in foodOptions" :key="opt.name" v-model="food" :value="opt.name" @change="registerUnsavedChange">{{opt.name}}
           <md-tooltip>{{opt.desc}}</md-tooltip>
         </md-radio>
-      </div>
-      <div class="md-layout-item md-size-50 md-xsmall-size-100">
+      </div> -->
+      <div class="md-layout-item md-size-75 md-xsmall-size-100">
         <md-field :md-counter="false">
           <label>Food Restrictions <small>(optional)</small></label>
           <md-input v-model="restrictions" @change="registerUnsavedChange" maxlength="80"></md-input>
@@ -55,13 +55,13 @@
     data () {
       return {
         rsvp: null,
-        food: null,
+        // food: null,
         restrictions: '',
         email: '',
         song: '',
         comment: '',
         saved: true,
-        foodOptions: [
+        /* foodOptions: [
           {
             name: 'Chicken',
             desc: 'Chicken parmesan stuffed with GMOs'
@@ -74,7 +74,7 @@
             name: 'Veg',
             desc: 'Vegan ravioli with lactose-free gluten-free elemental ice'
           }
-        ],
+        ], */
         showSnackbar: false,
         snackbarMessage: ''
       }
@@ -97,7 +97,7 @@
       saveData () {
         this.db.collection('guests').doc(this.result.id).set({
           rsvp: this.rsvp,
-          food: this.food,
+          // food: this.food,
           restrictions: this.restrictions,
           email: this.email,
           song: this.song,
@@ -115,7 +115,7 @@
       },
       populateData () {
         if (this.result.data.rsvp === undefined) this.rsvp = false; else this.rsvp = this.result.data.rsvp
-        if (this.result.data.food === undefined) this.food = 'None'; else this.food = this.result.data.food
+        // if (this.result.data.food === undefined) this.food = 'None'; else this.food = this.result.data.food
         if (this.result.data.restrictions === undefined) this.restrictions = ''; else this.restrictions = this.result.data.restrictions
         if (this.result.data.email === undefined) this.email = ''; else this.email = this.result.data.email
         if (this.result.data.song === undefined) this.song = ''; else this.song = this.result.data.song

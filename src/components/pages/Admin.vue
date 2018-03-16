@@ -20,7 +20,7 @@
         <md-table-cell md-label="Name" md-sort-by="name">{{item.data.name}}</md-table-cell>
         <md-table-cell md-label="Password" md-sort-by="password">{{item.data.password}}</md-table-cell>
         <md-table-cell md-label="RSVP" md-sort-by="rsvp">{{item.data.rsvp}}</md-table-cell>
-        <md-table-cell md-label="Food" md-sort-by="food">{{item.data.food}}</md-table-cell>
+        <!-- <md-table-cell md-label="Food" md-sort-by="food">{{item.data.food}}</md-table-cell> -->
         <md-table-cell md-label="Restrictions" md-sort-by="restrictions">{{item.data.restrictions}}</md-table-cell>
         <md-table-cell md-label="Email" md-sort-by="email">{{item.data.email}}</md-table-cell>
         <md-table-cell md-label="Song" md-sort-by="song">{{item.data.song}}</md-table-cell>
@@ -28,7 +28,7 @@
       </md-table-row>
     </md-table>
 
-    <pre v-if="!loading">{{allGuests}}</pre>
+    <!-- <pre v-if="!loading">{{allGuests}}</pre> -->
   </div>
 </template>
 
