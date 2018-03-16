@@ -18,7 +18,7 @@
 
       <md-table-row slot="md-table-row" slot-scope="{ item }">
         <md-table-cell md-label="Name" md-sort-by="name">{{item.data.name}}</md-table-cell>
-        <md-table-cell md-label="Postcode" md-sort-by="postcode">{{item.data.postcode}}</md-table-cell>
+        <md-table-cell md-label="Password" md-sort-by="password">{{item.data.password}}</md-table-cell>
         <md-table-cell md-label="RSVP" md-sort-by="rsvp">{{item.data.rsvp}}</md-table-cell>
         <md-table-cell md-label="Food" md-sort-by="food">{{item.data.food}}</md-table-cell>
         <md-table-cell md-label="Restrictions" md-sort-by="restrictions">{{item.data.restrictions}}</md-table-cell>

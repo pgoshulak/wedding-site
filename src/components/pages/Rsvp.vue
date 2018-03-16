@@ -5,18 +5,18 @@
     <!-- Initial state, no search results -->
     <md-empty-state v-if="searchResults.length==0" 
       md-icon="search" 
-      md-label="Please enter your Postal/Zip code" 
+      md-label="Please enter your secret phrase" 
       md-description="You will be able to RSVP for yourself and all your guests">
       <md-field>
-        <label>Postal/Zip Code</label>
-        <md-input id="postCodeSearchInput" v-model="postCodeSearch" @keyup.enter="searchPostCode"></md-input>
+        <label>Secret Phrase</label>
+        <md-input id="passwordSearchInput" v-model="passwordSearch" @keyup.enter="searchPassword"></md-input>
       </md-field>
-      <md-button id="btnSearchPostCode" class="md-primary md-raised" @click="searchPostCode">Search!</md-button>
+      <md-button id="btnSearchPassword" class="md-primary md-raised" @click="searchPassword">Search!</md-button>
     </md-empty-state>
 
     <!-- Search results -->
     <div v-if="searchResults.length">
-      <p>{{searchResults.length}} guest(s) found for {{postCodeSearch}}</p>
+      <p>{{searchResults.length}} guest(s) found for {{passwordSearch}}</p>
       <rsvp-entry v-for="result in searchResults" 
         :key="result.id" 
         :result="result" 
@@ -38,7 +38,7 @@
 
     <!-- Snackbar popup for 'no results found' -->
     <md-snackbar :md-duration="4000" :md-active.sync="showSnackbarNoResults" md-persistent>
-      No results found for {{postCodeSearch}}. Make sure you typed it correctly!
+      No results found for {{passwordSearch}}. Make sure you typed it correctly!
       <md-button class="md-primary" @click="showSnackbarNoResults = false">Dismiss</md-button>
     </md-snackbar>
   </div>
@@ -55,7 +55,7 @@ export default {
   data () {
     return {
       db: null,
-      postCodeSearch: '',
+      passwordSearch: '',
       searchResults: [],
       unsavedChanges: [],
       showDialogDiscardChanges: false,
@@ -64,15 +64,15 @@ export default {
     }
   },
   computed: {
-    postCodeSearchClean () {
-      return this.postCodeSearch.toLowerCase().replace(/ /g, '')
+    passwordSearchClean () {
+      return this.passwordSearch.toLowerCase().replace(/ /g, '')
     }
   },
   methods: {
-    searchPostCode () {
+    searchPassword () {
       this.searchResults = []
       let guestsRef = this.db.collection('guests')
-      guestsRef.where('postcode', '==', this.postCodeSearchClean)
+      guestsRef.where('password', '==', this.passwordSearchClean)
         .get().then((snap) => {
           if (snap.empty) {
             this.showSnackbarNoResults = true
@@ -84,7 +84,7 @@ export default {
             })
           })
         }).catch((err) => {
-          console.log('Error searching for ' + this.postCodeSearch, err)
+          console.log('Error searching for ' + this.passwordSearch, err)
         })
     },
     addUnsavedChange (guestId) {
@@ -120,7 +120,7 @@ export default {
     this.db = firebase.firestore()
   },
   mounted () {
-    document.getElementById('postCodeSearchInput').scrollIntoView()
+    document.getElementById('passwordSearchInput').scrollIntoView()
   },
   components: {
     RsvpEntry
