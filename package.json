@@ -12,9 +12,13 @@
   },
   "dependencies": {
     "firebase": "^4.8.1",
+    "promise-polyfill": "^7.1.0",
     "vue": "^2.5.2",
+    "vue-image-lightbox": "^5.5.3",
+    "vue-lazyload": "^1.2.2",
     "vue-material": "^1.0.0-beta-8",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vue-touch": "^2.0.0-beta.4"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.5",

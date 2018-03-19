@@ -4,12 +4,19 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueMaterial from 'vue-material'
+import VueLazyLoad from 'vue-lazyload'
+import VueTouch from 'vue-touch'
+import 'vue-material/dist/vue-material.min.css'
+import 'vue-image-lightbox/dist/vue-image-lightbox.min.css'
+Vue.use(VueLazyLoad)
+Vue.use(VueTouch, {
+  name: 'v-touch'
+})
 /* import {
   MdIcon,
   MdButton
 } from 'vue-material/dist/components' */
 // import MdIcon from 'vue-material/dist/components'
-import 'vue-material/dist/vue-material.min.css'
 
 Vue.config.productionTip = false
 
@@ -22,5 +29,7 @@ new Vue({
   el: '#app',
   router,
   template: '<App/>',
-  components: { App }
+  components: {
+    App
+  }
 })

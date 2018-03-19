@@ -1,7 +1,11 @@
 <template>
   <div id="home">
     <h3 class="md-display-1">Photo Gallery</h3>
-    <img :src="photo.thumbUrl" :key="photo.uploaded" alt="image" v-for="photo in photoList">
+    <!-- <img :src="photo.thumbUrl" :key="photo.uploaded" alt="image" v-for="photo in photoList"> -->
+    <div class="thumbnail" v-for="(photo, index) in photoList" :key="index">
+      <img :alt="photo.caption" v-lazy="photo.thumb" @click="openLightbox(index)">
+    </div>
+    <lightbox id="lightbox" ref="lightbox" :images="photoList" :showLightBox="false" :showCaption="true" :showThumbs="true"></lightbox>
   </div>
 </template>
 
@@ -9,6 +13,7 @@
   import {apiKey as API_KEY} from '../../../service/firebase.js'
   import firebase from 'firebase'
   import 'firebase/firestore'
+  import Lightbox from '../../../node_modules/vue-image-lightbox'
 
   export default {
     name: 'Photos',
@@ -23,10 +28,18 @@
         let photos = []
         db.collection('photos').get().then((snap) => {
           snap.forEach((doc) => {
-            photos.push(doc.data())
+            let photoData = doc.data()
+            photos.push({
+              thumb: photoData.thumbUrl,
+              src: photoData.fullUrl,
+              caption: photoData.uploaded.toString()
+            })
           })
         })
         return photos
+      },
+      openLightbox (index) {
+        this.$refs.lightbox.showImage(index)
       }
     },
     created () {
@@ -39,10 +52,21 @@
       }
       let db = firebase.firestore()
       this.photoList = this.getPhotos(db)
+    },
+    components: {
+      Lightbox
     }
   }
 </script>
 
-<style>
+<style lang="scss">
 
+.vue-lb-container {
+    z-index: 5;
+}
+.thumbnail {
+  cursor: pointer;
+  display:inline;
+  margin: 4px;
+}
 </style>
