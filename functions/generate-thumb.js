@@ -76,6 +76,14 @@ exports.generateThumbnail = functions.storage.object().onChange(event => {
   const bucket = gcs.bucket(fileBucket)
   const tempFilePath = path.join(os.tmpdir(), fileName)
   const metadata = { contentType: contentType }
+
+  // We add a 'thumb_' prefix to thumbnails file name. That's where we'll upload the thumbnail.
+  const thumbFileName = `thumb_${fileName}`
+  const thumbFilePath = path.join(path.dirname(filePath), thumbFileName)
+
+  const thumbFile = bucket.file(thumbFilePath)
+  const origFile = bucket.file(filePath)
+
   return bucket.file(filePath).download({
     destination: tempFilePath
   }).then(() => {
@@ -84,13 +92,29 @@ exports.generateThumbnail = functions.storage.object().onChange(event => {
     return spawn('convert', [tempFilePath, '-thumbnail', '200x200>', tempFilePath])
   }).then(() => {
     console.log('Thumbnail created at', tempFilePath)
-    // We add a 'thumb_' prefix to thumbnails file name. That's where we'll upload the thumbnail.
-    const thumbFileName = `thumb_${fileName}`
-    const thumbFilePath = path.join(path.dirname(filePath), thumbFileName)
     // Uploading the thumbnail.
     return bucket.upload(tempFilePath, { destination: thumbFilePath, metadata: metadata })
   // Once the thumbnail has been uploaded delete the local file to free up disk space.
-  }).then(() => fs.unlinkSync(tempFilePath))
+  }).then(() => {
+    fs.unlinkSync(tempFilePath)
+    // Get the Signed URLs for the images
+    const config = {
+      action: 'read',
+      expires: '03-01-2500'
+    }
+    return Promise.all([
+      thumbFile.getSignedUrl(config),
+      origFile.getSignedUrl(config)
+    ])
+  }).then(results => {
+    const thumbResult = results[0]
+    const origResult = results[1]
+    const thumbFileUrl = thumbResult[0]
+    const origFileUrl = origResult[0]
+    console.log(`Got signed URLs...`)
+    console.log('Thumb: ', thumbFileUrl)
+    console.log('Orig: ', origFileUrl)
+  })
   // [END thumbnailGeneration]
 })
 // [END generateThumbnail]
