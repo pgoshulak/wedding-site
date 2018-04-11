@@ -68,5 +68,10 @@
   cursor: pointer;
   display:inline;
   margin: 4px;
+  & img {
+    height: 150px;
+    width: 150px;
+    object-fit: cover;
+  }
 }
 </style>
