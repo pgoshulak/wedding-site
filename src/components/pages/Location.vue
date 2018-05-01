@@ -10,7 +10,7 @@
 </template>
 
 <script>
-  const API_KEY = 'AIzaSyAYI6g6LhzhqAQVnRxCyzoz_N-aWVh45xw'
+  import {apiKey as API_KEY} from '../../../service/firebase.js'
   const MAP_QUERY = `Earth%20to%20Table%3A%20The%20Farm%2C%20Millgrove%20ON`
   const MAP_ZOOM = 11
   export default {
@@ -18,6 +18,9 @@
     computed: {
       src () { return `https://www.google.com/maps/embed/v1/place?key=${API_KEY}&q=${MAP_QUERY}&zoom=${MAP_ZOOM}` },
       directionsHref () { return `https://www.google.com/maps/dir/?api=1&destination=${MAP_QUERY}` }
+    },
+    created () {
+      console.log(API_KEY)
     }
   }
 </script>
