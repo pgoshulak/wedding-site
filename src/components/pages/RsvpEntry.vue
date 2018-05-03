@@ -5,15 +5,9 @@
         <span class="md-title">{{result.data.name}}</span>
       </div>
       <div class="md-layout-item md-size-25 md-xsmall-size-100">
-        <!-- <md-switch v-model="rsvp" @change="registerUnsavedChange">{{rsvpText}}</md-switch> -->
-        <md-radio v-model="rsvp" :value="true" change="registerUnsavedChange">{{rsvpTextTrue}}</md-radio>
-        <md-radio v-model="rsvp" :value="false" change="registerUnsavedChange">{{rsvpTextFalse}}</md-radio>
+        <md-radio v-model="rsvp" :value="true" @change="registerUnsavedChange">{{rsvpTextTrue}}</md-radio>
+        <md-radio v-model="rsvp" :value="false" @change="registerUnsavedChange">{{rsvpTextFalse}}</md-radio>
       </div>
-      <!-- <div class="md-layout-item md-size-25 md-xsmall-size-100">
-        <md-radio v-for="opt in foodOptions" :key="opt.name" v-model="food" :value="opt.name" @change="registerUnsavedChange">{{opt.name}}
-          <md-tooltip>{{opt.desc}}</md-tooltip>
-        </md-radio>
-      </div> -->
       <div class="md-layout-item md-size-75 md-xsmall-size-100">
         <md-field :md-counter="false">
           <label>Food Restrictions <small>(optional)</small></label>
@@ -57,43 +51,16 @@
     data () {
       return {
         rsvp: null,
-        // food: null,
         restrictions: '',
         email: '',
         song: '',
         comment: '',
         saved: true,
-        /* foodOptions: [
-          {
-            name: 'Chicken',
-            desc: 'Chicken parmesan stuffed with GMOs'
-          },
-          {
-            name: 'Beef',
-            desc: 'Beef tenderloin with hormone-steroid pan sauce'
-          },
-          {
-            name: 'Veg',
-            desc: 'Vegan ravioli with lactose-free gluten-free elemental ice'
-          }
-        ], */
         showSnackbar: false,
         snackbarMessage: ''
       }
     },
     computed: {
-      /* rsvpText () {
-        switch (this.rsvp) {
-          case true:
-            return 'Attending'
-          case false:
-            return 'Not Attending'
-          case 'on':
-            return 'error[on]'
-          default:
-            return 'error[default]'
-        }
-      } */
       rsvpTextTrue () {
         if (this.rsvp) {
           return 'Attending :)'
@@ -113,7 +80,6 @@
       saveData () {
         this.db.collection('guests').doc(this.result.id).set({
           rsvp: this.rsvp,
-          // food: this.food,
           restrictions: this.restrictions,
           email: this.email,
           song: this.song,
@@ -131,7 +97,6 @@
       },
       populateData () {
         if (this.result.data.rsvp === undefined) this.rsvp = false; else this.rsvp = this.result.data.rsvp
-        // if (this.result.data.food === undefined) this.food = 'None'; else this.food = this.result.data.food
         if (this.result.data.restrictions === undefined) this.restrictions = ''; else this.restrictions = this.result.data.restrictions
         if (this.result.data.email === undefined) this.email = ''; else this.email = this.result.data.email
         if (this.result.data.song === undefined) this.song = ''; else this.song = this.result.data.song
