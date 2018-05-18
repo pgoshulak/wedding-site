@@ -1,9 +1,10 @@
 <template>
   <div id="home">
     <h3 class="md-display-1">Photo Gallery</h3>
-    <!-- <img :src="photo.thumbUrl" :key="photo.uploaded" alt="image" v-for="photo in photoList"> -->
-    <div class="thumbnail" v-for="(photo, index) in photoList" :key="index">
-      <img :alt="photo.caption" v-lazy="photo.thumb" @click="openLightbox(index)">
+    <div id="thumbnails">
+      <div class="thumbnail" v-for="(photo, index) in photoList" :key="index">
+        <img :alt="photo.caption" v-lazy="photo.thumb" @click="openLightbox(index)">
+      </div>
     </div>
     <lightbox id="lightbox" ref="lightbox" :images="photoList" :showLightBox="false" :showCaption="true" :showThumbs="true"></lightbox>
   </div>
@@ -19,7 +20,6 @@
     name: 'Photos',
     data () {
       return {
-        // db: null,
         photoList: []
       }
     },
@@ -64,13 +64,19 @@
 .vue-lb-container {
     z-index: 5;
 }
+
+#thumbnails {
+  // https://medium.com/samsung-internet-dev/common-responsive-layouts-with-css-grid-and-some-without-245a862f48df
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr))
+}
+
 .thumbnail {
   cursor: pointer;
-  display:inline;
   margin: 4px;
   & img {
-    height: 150px;
-    width: 150px;
+    height: 100%;
+    width: 100%;
     object-fit: cover;
   }
 }
