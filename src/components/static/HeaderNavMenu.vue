@@ -28,6 +28,10 @@
 </script>
 
 <style scoped>
+#nav-menu-button {
+  box-shadow: 0 0 0 2px white;
+}
+
 #nav-menu {
   position: fixed;
   right: 10px;

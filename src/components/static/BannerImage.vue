@@ -44,8 +44,8 @@ img {
 }
 #caption-text {
   position: absolute;
-  bottom: 10px;
-  right: 10px;
+  bottom: 6px;
+  right: 6px;
   color: white;
   opacity: 0.5;
 }
