@@ -18,9 +18,6 @@
     computed: {
       src () { return `https://www.google.com/maps/embed/v1/place?key=${API_KEY}&q=${MAP_QUERY}&zoom=${MAP_ZOOM}` },
       directionsHref () { return `https://www.google.com/maps/dir/?api=1&destination=${MAP_QUERY}` }
-    },
-    created () {
-      console.log(API_KEY)
     }
   }
 </script>

@@ -21,9 +21,9 @@ export default {
           to: '/'
         },
         {
-          id: 'rsvp',
-          label: 'RSVP',
-          to: 'rsvp'
+          id: 'address-survey',
+          label: 'Address Survey',
+          to: 'address-survey'
         },
         {
           id: 'our-story',
