@@ -1,8 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import {pw as ADMIN_PASSWORD} from '../../service/firebase.js'
-
-const DEV_MODE_SKIP_ADMIN_PASSWORD = false
 
 const Home = () => import('@/components/pages/Home' /* webpackChunkName: "chunk-home" */)
 const OurStory = () => import('@/components/pages/OurStory' /* webpackChunkName: "chunk-our-story" */)
@@ -12,7 +9,6 @@ const Rsvp = () => import('@/components/pages/Rsvp' /* webpackChunkName: "chunk-
 const AddressSurvey = () => import('@/components/pages/AddressSurvey' /* webpackChunkName: "chunk-address-survey" */)
 const Registry = () => import('@/components/pages/Registry' /* webpackChunkName: "chunk-registry" */)
 const Photos = () => import('@/components/pages/Photos' /* webpackChunkName: "chunk-photos" */)
-const Admin = () => import('@/components/pages/Admin' /* webpackChunkName: "chunk-admin" */)
 
 Vue.use(Router)
 
@@ -58,23 +54,6 @@ export default new Router({
       path: '/photos',
       name: 'Photos',
       component: Photos
-    },
-    {
-      path: '/admin',
-      name: 'Admin',
-      component: Admin,
-      beforeEnter: (to, from, next) => {
-        if (DEV_MODE_SKIP_ADMIN_PASSWORD) {
-          next()
-          return
-        }
-        const passwordInput = window.prompt('Password:')
-        if (passwordInput === ADMIN_PASSWORD) {
-          next()
-        } else {
-          next(false)
-        }
-      }
     }
   ]
 })

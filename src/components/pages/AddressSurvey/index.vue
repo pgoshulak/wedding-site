@@ -7,14 +7,11 @@
 </template>
 
 <script>
-  import {apiKey as API_KEY} from '../../../../service/firebase.js'
-  import * as firebase from 'firebase'
-  import 'firebase/firestore'
+  import { db } from '../../../main.js'
   import SearchArea from './SearchArea'
   export default {
     data () {
       return {
-        db: null,
         guestsRef: null,
         searchTerm: '',
         searchResults: [],
@@ -24,7 +21,6 @@
     methods: {
       submitSearch (searchTerm) {
         // console.log(data)
-        this.guestsRef = this.guestsRef || this.db.collection('guests')
         this.searchTerm = searchTerm
         this.searchResults = []
         this.guestsRef.where('email', '==', searchTerm).get()
@@ -44,20 +40,7 @@
       }
     },
     created () {
-      console.log('inside created()')
-      console.log(firebase)
-      if (!firebase.apps.length) {
-        console.log('initializing firebase')
-        firebase.initializeApp({
-          apiKey: API_KEY,
-          authDomain: 'peeph-wedding.firebaseapp.com',
-          projectId: 'peeph-wedding'
-        })
-      }
-      console.log('setting this.db = firebase.firestore()')
-      this.db = firebase.firestore().settings({
-        timestampsInSnapshots: true
-      })
+      this.guestsRef = db.collection('guests')
     },
     components: {
       SearchArea

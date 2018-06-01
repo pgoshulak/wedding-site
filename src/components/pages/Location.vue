@@ -10,7 +10,9 @@
 </template>
 
 <script>
-  import {apiKey as API_KEY} from '../../../service/firebase.js'
+  import { firebaseConfig } from '../../../secrets.js'
+  const API_KEY = firebaseConfig.apiKey
+  // import {apiKey as API_KEY} from '../../../service/firebase.js'
   const MAP_QUERY = `Earth%20to%20Table%3A%20The%20Farm%2C%20Millgrove%20ON`
   const MAP_ZOOM = 11
   export default {

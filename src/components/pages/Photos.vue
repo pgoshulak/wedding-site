@@ -11,9 +11,7 @@
 </template>
 
 <script>
-  import {apiKey as API_KEY} from '../../../service/firebase.js'
-  import firebase from 'firebase'
-  import 'firebase/firestore'
+  import { db } from '../../main.js'
   import Lightbox from '../../../node_modules/vue-image-lightbox'
 
   export default {
@@ -43,14 +41,6 @@
       }
     },
     created () {
-      if (!firebase.apps.length) {
-        firebase.initializeApp({
-          apiKey: API_KEY,
-          authDomain: 'peeph-wedding.firebaseapp.com',
-          projectId: 'peeph-wedding'
-        })
-      }
-      let db = firebase.firestore()
       this.photoList = this.getPhotos(db)
     },
     components: {
