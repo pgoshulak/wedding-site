@@ -24,6 +24,7 @@
     methods: {
       submitSearch (searchTerm) {
         this.searchTerm = searchTerm
+        // Clear existing search results
         this.searchResultsFamily = {}
         this.searchResultsGuests = []
 
@@ -32,25 +33,22 @@
           .then(snap1 => {
             // No results
             if (snap1.empty) {
-              this.showSnackbarNoResults = true
-            } else {
-              // Retrieve the guest's familyId
-              const familyId = snap1.docs[0].data().familyId
-              // Query for all guests in the family
-              this.guestsRef.where('familyId', '==', familyId).get()
-                .then(snap2 => {
-                  // Add each guest of the family into the results array
-                  snap2.forEach(guestRef => {
-                    this.searchResultsGuests.push(guestRef.data())
-                  })
-                })
-              // Query for the family's data (address, etc)
-              this.familiesRef.doc(familyId).get()
-                .then(snap3 => {
-                  console.log(snap3)
-                  this.searchResultsFamily = snap3.data()
-                })
+              throw new Error(`Could not find email ${searchTerm}`)
             }
+            // Retrieve the guest's familyId
+            const familyId = snap1.docs[0].data().familyId
+            // Query the family data and all associated guests' data
+            return Promise.all([
+              this.familiesRef.doc(familyId).get(),
+              this.guestsRef.where('familyId', '==', familyId).get()
+            ]).then(snaps => {
+              // Store the family data
+              this.searchResultsFamily = snaps[0].data()
+              // Store each guest's data
+              snaps[1].forEach(snap => {
+                this.searchResultsGuests.push(snap.data())
+              })
+            })
           }).catch(err => {
             console.error('Error searching for ' + searchTerm, err)
           })
