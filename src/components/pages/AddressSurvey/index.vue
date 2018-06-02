@@ -2,8 +2,12 @@
   <div id="address-survey">
     <h3 class="md-display-1">Address Survey</h3>
     <SearchArea v-if="searchResultsGuests.length==0" @submitSearch="submitSearch"></SearchArea>
-    <pre>{{searchResultsFamily}}</pre>
-    <pre>{{searchResultsGuests}}</pre>
+    <!-- <pre>{{searchResultsFamily}}</pre> -->
+    <!-- <pre>{{searchResultsGuests}}</pre> -->
+    <div v-else>
+      <FamilyData :family="searchResultsFamily"/>
+      <GuestData v-for="guest in searchResultsGuests" :key="guest.id" :guest="guest"></GuestData>
+    </div>
 
     <!-- Snackbar popup for error display -->
     <md-snackbar :md-duration="4000" :md-active.sync="showErrorSnackbar" md-persistent>
@@ -16,6 +20,8 @@
 <script>
   import { db } from '../../../main.js'
   import SearchArea from './SearchArea'
+  import FamilyData from './FamilyData'
+  import GuestData from './GuestData'
   export default {
     data () {
       return {
@@ -67,7 +73,9 @@
       this.familiesRef = db.collection('families')
     },
     components: {
-      SearchArea
+      SearchArea,
+      FamilyData,
+      GuestData
     }
   }
 </script>
