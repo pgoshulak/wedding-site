@@ -1,9 +1,15 @@
 <template>
-  <div id="home">
+  <div id="address-survey">
     <h3 class="md-display-1">Address Survey</h3>
     <SearchArea v-if="searchResultsGuests.length==0" @submitSearch="submitSearch"></SearchArea>
     <pre>{{searchResultsFamily}}</pre>
     <pre>{{searchResultsGuests}}</pre>
+
+    <!-- Snackbar popup for error display -->
+    <md-snackbar :md-duration="4000" :md-active.sync="showErrorSnackbar" md-persistent>
+      {{errorMessage}}
+      <md-button class="md-primary" @click="showErrorSnackbar = false">Dismiss</md-button>
+    </md-snackbar>
   </div>
 </template>
 
@@ -18,7 +24,8 @@
         searchTerm: '',
         searchResultsFamily: {},
         searchResultsGuests: [],
-        showSnackbarNoResults: false
+        showErrorSnackbar: false,
+        errorMessage: 'Error'
       }
     },
     methods: {
@@ -33,7 +40,7 @@
           .then(snap1 => {
             // No results
             if (snap1.empty) {
-              throw new Error(`Could not find email ${searchTerm}`)
+              throw new Error(`Could not find email "${searchTerm}"`)
             }
             // Retrieve the guest's familyId
             const familyId = snap1.docs[0].data().familyId
@@ -50,7 +57,8 @@
               })
             })
           }).catch(err => {
-            console.error('Error searching for ' + searchTerm, err)
+            this.errorMessage = `Error: ${err.message}`
+            this.showErrorSnackbar = true
           })
       }
     },
