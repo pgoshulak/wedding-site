@@ -1,0 +1,26 @@
+{
+  "searchResultsFamily": {
+    "name": "Goshulak newlyweds"
+  },
+  "searchResultsGuests": [
+    {
+      "comment": "so excited! I'm the bride lol 💍🤷‍♀️",
+      "email": "barracs@gmail.com",
+      "familyId": "goshulak-ps",
+      "food": "Veg",
+      "name": "Steph Barraco",
+      "password": "peeph",
+      "phone": "6478800851"
+    },
+    {
+      "comment": "I am excited as well.",
+      "email": "pgoshulak@gmail.com",
+      "familyId": "goshulak-ps",
+      "name": "Peter Goshulak",
+      "phone": "6477633377",
+      "restrictions": "less vegan",
+      "rsvp": true,
+      "song": "'music"
+    }
+  ]
+}

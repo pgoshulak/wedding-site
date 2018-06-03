@@ -1,13 +1,17 @@
 <template>
   <div id="address-survey">
-    <h3 class="md-display-1">Address Survey</h3>
+    <h3 class="md-display-1">{{titleText}}</h3>
     <SearchArea v-if="searchResultsGuests.length==0" @submitSearch="submitSearch"></SearchArea>
-    <!-- <pre>{{searchResultsFamily}}</pre> -->
-    <!-- <pre>{{searchResultsGuests}}</pre> -->
-    <div v-else>
-      <FamilyData :family="searchResultsFamily"/>
-      <GuestData v-for="guest in searchResultsGuests" :key="guest.id" :guest="guest"></GuestData>
-    </div>
+
+    <md-tabs v-else md-alignment="fixed">
+      <md-tab id="survey" md-label="Send my invite">
+        <FamilyData :resultData="searchResultsFamily"/>
+        <GuestData v-for="guest in searchResultsGuests" :key="guest.id" :guest="guest"></GuestData>
+      </md-tab>
+      <md-tab id="reject" md-label="We cannot attend">
+        :(
+      </md-tab>
+    </md-tabs>
 
     <!-- Snackbar popup for error display -->
     <md-snackbar :md-duration="4000" :md-active.sync="showErrorSnackbar" md-persistent>
@@ -22,14 +26,19 @@
   import SearchArea from './SearchArea'
   import FamilyData from './FamilyData'
   import GuestData from './GuestData'
+  import sampleData from './sample-data.json'
+  
   export default {
     data () {
       return {
+        titleText: 'Address Survey',
         guestsRef: null,
         familiesRef: null,
         searchTerm: '',
-        searchResultsFamily: {},
-        searchResultsGuests: [],
+        // searchResultsFamily: {},
+        // searchResultsGuests: [],
+        searchResultsFamily: sampleData.searchResultsFamily,
+        searchResultsGuests: sampleData.searchResultsGuests,
         showErrorSnackbar: false,
         errorMessage: 'Error'
       }
@@ -57,6 +66,7 @@
             ]).then(snaps => {
               // Store the family data
               this.searchResultsFamily = snaps[0].data()
+              this.titleText = this.searchResultsFamily.name
               // Store each guest's data
               snaps[1].forEach(snap => {
                 this.searchResultsGuests.push(snap.data())
