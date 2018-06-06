@@ -39,8 +39,9 @@
 </template>
 
 <script>
+  import { db } from '../../../main.js'
   export default {
-    props: ['resultData'],
+    props: ['familyId', 'resultData', 'lastSaveRequest'],
     data () {
       return {
         name: '',
@@ -60,8 +61,28 @@
         this.postalCode = this.resultData.postalCode || ''
         this.country = this.resultData.country || ''
       },
-      registerUnsavedChange () {
+      registerUnsavedChange (e) {
+        console.log(e.target.id, e.target.value)
         this.$emit('newUnsavedChange')
+      },
+      saveToDatabase () {
+        db.collection('families').doc(this.familyId).set({
+          streetAddress: this.streetAddress,
+          city: this.city,
+          province: this.province,
+          postalCode: this.postalCode,
+          country: this.country
+        }, {merge: true}).then(() => {
+          this.$emit('changesSaved')
+        }).catch(err => {
+          console.error(err)
+        })
+      }
+    },
+    watch: {
+      lastSaveRequest (val) {
+        console.log('FamilyData -> lastSaveRequest at', val)
+        this.saveToDatabase()
       }
     },
     created () {

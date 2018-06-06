@@ -5,8 +5,9 @@
 
     <md-tabs v-else md-alignment="fixed">
       <md-tab id="survey" md-label="Send my invite">
-        <FamilyData :resultData="searchResultsFamily"/>
-        <GuestData v-for="guest in searchResultsGuests" :key="guest.id" :guest="guest"></GuestData>
+        <md-button class="btn-raised btn-primary" @click="saveChanges">Save</md-button>
+        <FamilyData :familyId="foundFamilyId" :resultData="searchResultsFamily" :lastSaveRequest="lastSaveRequest"/>
+        <GuestData v-for="guest in searchResultsGuests" :key="guest.id" :guest="guest" :lastSaveRequest="lastSaveRequest"></GuestData>
       </md-tab>
       <md-tab id="reject" md-label="We cannot attend">
         :(
@@ -26,7 +27,7 @@
   import SearchArea from './SearchArea'
   import FamilyData from './FamilyData'
   import GuestData from './GuestData'
-  import sampleData from './sample-data.json'
+  // import sampleData from './sample-data.json'
   
   export default {
     data () {
@@ -35,12 +36,14 @@
         guestsRef: null,
         familiesRef: null,
         searchTerm: '',
-        // searchResultsFamily: {},
-        // searchResultsGuests: [],
-        searchResultsFamily: sampleData.searchResultsFamily,
-        searchResultsGuests: sampleData.searchResultsGuests,
+        foundFamilyId: '',
+        searchResultsFamily: {},
+        searchResultsGuests: [],
+        // searchResultsFamily: sampleData.searchResultsFamily,
+        // searchResultsGuests: sampleData.searchResultsGuests,
         showErrorSnackbar: false,
-        errorMessage: 'Error'
+        errorMessage: 'Error',
+        lastSaveRequest: null
       }
     },
     methods: {
@@ -59,6 +62,7 @@
             }
             // Retrieve the guest's familyId
             const familyId = snap1.docs[0].data().familyId
+            this.foundFamilyId = familyId
             // Query the family data and all associated guests' data
             return Promise.all([
               this.familiesRef.doc(familyId).get(),
@@ -76,6 +80,10 @@
             this.errorMessage = `Error: ${err.message}`
             this.showErrorSnackbar = true
           })
+      },
+      saveChanges () {
+        console.log('index -> saveChanges()')
+        this.lastSaveRequest = new Date()
       }
     },
     created () {
