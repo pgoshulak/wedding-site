@@ -13,3 +13,10 @@ $background: md-get-palette-color(green, 50);
 body {
   overflow-x: hidden;
 }
+
+:root {
+  // Issues with node-sass compatibility prevent vars from being interpolated properly
+  --md-theme-default-primary: #388e3c !important; // <-- manually set from $primary
+  --md-theme-default-accent: #f8bbd0 !important; // <-- manually set from $accent
+  // --md-theme-default-background: $background !important;
+}
