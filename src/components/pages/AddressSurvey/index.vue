@@ -5,9 +5,9 @@
 
     <md-tabs v-else md-alignment="fixed">
       <md-tab id="survey" md-label="Send my invite">
-        <md-button class="btn-raised btn-primary" @click="saveChanges">Save</md-button>
         <FamilyData :familyId="foundFamilyId" :resultData="searchResultsFamily" :lastSaveRequest="lastSaveRequest"/>
         <GuestData v-for="guest in searchResultsGuests" :key="guest.id" :guest="guest" :lastSaveRequest="lastSaveRequest"></GuestData>
+        <md-button class="md-raised md-accent" @click="saveChanges">Save</md-button>
       </md-tab>
       <md-tab id="reject" md-label="We cannot attend">
         :(
@@ -73,7 +73,7 @@
               this.titleText = this.searchResultsFamily.name
               // Store each guest's data
               snaps[1].forEach(snap => {
-                this.searchResultsGuests.push(snap.data())
+                this.searchResultsGuests.push({...snap.data(), id: snap.id})
               })
             })
           }).catch(err => {

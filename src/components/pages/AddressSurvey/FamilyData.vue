@@ -3,31 +3,31 @@
     <form action="#" autocomplete="on">
       <div class="md-layout md-gutter md-alignment-center-left">
 
-        <div class="md-layout-item md-size-100 md-xsmall-size-100">
+        <div class="md-layout-item md-size-66 md-xsmall-size-100">
           <md-field :md-counter="false">
             <label for="streetAddress">Street Address</label>
             <md-input id="streetAddress" v-model="streetAddress" @change="registerUnsavedChange"></md-input>
           </md-field>
         </div>
-        <div class="md-layout-item md-size-50 md-xsmall-size-100">
+        <div class="md-layout-item md-size-33 md-xsmall-size-50">
           <md-field :md-counter="false">
             <label for="city">City</label>
             <md-input id="city" v-model="city" @change="registerUnsavedChange"></md-input>
           </md-field>
         </div>
-        <div class="md-layout-item md-size-50 md-xsmall-size-100">
+        <div class="md-layout-item md-size-33 md-xsmall-size-50">
           <md-field :md-counter="false">
             <label for="province">Province/State</label>
             <md-input id="province" v-model="province" @change="registerUnsavedChange"></md-input>
           </md-field>
         </div>
-        <div class="md-layout-item md-size-50 md-xsmall-size-100">
+        <div class="md-layout-item md-size-33 md-xsmall-size-50">
           <md-field :md-counter="false">
             <label for="postalCode">Postal/Zip Code</label>
             <md-input id="postalCode" v-model="postalCode" @change="registerUnsavedChange"></md-input>
           </md-field>
         </div>
-        <div class="md-layout-item md-size-50 md-xsmall-size-100">
+        <div class="md-layout-item md-size-33 md-xsmall-size-50">
           <md-field :md-counter="false">
             <label for="country">Country</label>
             <md-input id="country" v-model="country" @change="registerUnsavedChange"></md-input>
