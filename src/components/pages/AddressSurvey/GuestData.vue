@@ -3,16 +3,16 @@
     <span class="md-title">{{guest.name}}</span>
 
     <div class="md-layout md-gutter md-alignment-center-left">
-      <div class="md-layout-item md-size-40 md-xsmall-size-66">
+      <div class="md-layout-item md-size-40 md-xsmall-size-60">
         <md-field :md-counter="false">
-          <label for="guest-email">Email (Optional)</label>
+          <label for="guest-email">Email <small>(Optional)</small></label>
           <md-input id="guest-email" v-model="guestEmail" @change="registerUnsavedChange"></md-input>
         </md-field>
       </div>
 
-      <div class="md-layout-item md-size-25 md-xsmall-size-33">
+      <div class="md-layout-item md-size-25 md-xsmall-size-40">
         <md-field :md-counter="false">
-          <label for="guest-phone">Phone (Optional)</label>
+          <label for="guest-phone">Phone <small>(Optional)</small></label>
           <md-input id="guest-phone" v-model="guestPhone" @change="registerUnsavedChange"></md-input>
         </md-field>
       </div>

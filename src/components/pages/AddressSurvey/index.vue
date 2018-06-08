@@ -1,19 +1,29 @@
 <template>
   <div id="address-survey">
-    <h3 class="md-display-1">{{titleText}}</h3>
+    <!-- <h3 class="md-headline">{{titleText}}</h3> -->
     <SearchArea v-if="searchResultsGuests.length==0" @submitSearch="submitSearch"></SearchArea>
 
-    <md-tabs v-else md-alignment="fixed">
-      <md-tab id="survey" md-label="Send my invite">
-        <FamilyData :familyId="foundFamilyId" :resultData="searchResultsFamily" :lastSaveRequest="lastSaveRequest"/>
-        <GuestData v-for="guest in searchResultsGuests" :key="guest.id" :guest="guest" :lastSaveRequest="lastSaveRequest"></GuestData>
-        <md-button class="md-raised md-accent" @click="saveChanges">Save</md-button>
-      </md-tab>
-      <md-tab id="reject" md-label="We cannot attend">
-        :(
-      </md-tab>
-    </md-tabs>
+    <md-steppers v-else md-vertical>
 
+      <md-step id="accept-reject" md-label="Send my invite?">
+        <p>Welcome, {{searchResultsFamily.name || "no name"}}</p>
+        <md-button class="md-primary md-raised">Send my invite</md-button>
+        <md-button>We cannot attend</md-button>
+      </md-step>
+
+      <md-step id="family" md-label="Address">
+        <FamilyData :familyId="foundFamilyId" :resultData="searchResultsFamily" :lastSaveRequest="lastSaveRequest"/>
+      </md-step> 
+
+      <md-step id="guests" md-label="Guests">
+        <GuestData v-for="guest in searchResultsGuests" :key="guest.id" :guest="guest" :lastSaveRequest="lastSaveRequest"></GuestData>
+      </md-step>
+
+    </md-steppers> 
+    
+    <md-button class="md-raised md-accent" @click="saveChanges">Save</md-button>
+
+        
     <!-- Snackbar popup for error display -->
     <md-snackbar :md-duration="4000" :md-active.sync="showErrorSnackbar" md-persistent>
       {{errorMessage}}
@@ -39,6 +49,7 @@
         foundFamilyId: '',
         searchResultsFamily: {},
         searchResultsGuests: [],
+        activeStep: '',
         // searchResultsFamily: sampleData.searchResultsFamily,
         // searchResultsGuests: sampleData.searchResultsGuests,
         showErrorSnackbar: false,
@@ -98,6 +109,8 @@
   }
 </script>
 
-<style scoped>
-
+<style >
+  #survey .md-stepper-content {
+    padding: 0px 12px 0px 40px
+  }
 </style>
