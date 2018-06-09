@@ -3,27 +3,29 @@
     <!-- <h3 class="md-headline">{{titleText}}</h3> -->
     <SearchArea v-if="searchResultsGuests.length==0" @submitSearch="submitSearch"></SearchArea>
 
-    <md-steppers v-else md-vertical>
+    <md-steppers v-else md-vertical :md-active-step.sync="activeStep">
 
       <md-step id="accept-reject" md-label="Send my invite?">
         <p>Welcome, {{searchResultsFamily.name || "no name"}}</p>
-        <md-button class="md-primary md-raised">Send my invite</md-button>
+        <md-button class="md-primary md-raised" @click="activeStep = 'family'">Send my invite</md-button>
         <md-button>We cannot attend</md-button>
       </md-step>
 
       <md-step id="family" md-label="Address">
+        <p>Where should your invitation be sent?</p>
         <FamilyData :familyId="foundFamilyId" :resultData="searchResultsFamily" :lastSaveRequest="lastSaveRequest"/>
+        <md-button class="md-primary md-raised" @click="activeStep = 'guests'">Continue</md-button>
+        <md-button @click="activeStep = 'accept-reject'">Back</md-button>
       </md-step> 
 
       <md-step id="guests" md-label="Guests">
         <GuestData v-for="guest in searchResultsGuests" :key="guest.id" :guest="guest" :lastSaveRequest="lastSaveRequest"></GuestData>
+        <md-button class="md-primary md-raised" @click="saveChanges">Send my invite!</md-button>
+        <md-button @click="activeStep = 'family'">Back</md-button>
       </md-step>
 
     </md-steppers> 
     
-    <md-button class="md-raised md-accent" @click="saveChanges">Save</md-button>
-
-        
     <!-- Snackbar popup for error display -->
     <md-snackbar :md-duration="4000" :md-active.sync="showErrorSnackbar" md-persistent>
       {{errorMessage}}
@@ -49,7 +51,7 @@
         foundFamilyId: '',
         searchResultsFamily: {},
         searchResultsGuests: [],
-        activeStep: '',
+        activeStep: 'accept-reject',
         // searchResultsFamily: sampleData.searchResultsFamily,
         // searchResultsGuests: sampleData.searchResultsGuests,
         showErrorSnackbar: false,
@@ -94,6 +96,8 @@
       },
       saveChanges () {
         console.log('index -> saveChanges()')
+        // lastSaveRequest is a 'watched prop' in the family/guest child elements.
+        // Change this value triggers the children to save to firebase
         this.lastSaveRequest = new Date()
       }
     },
