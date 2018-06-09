@@ -19,7 +19,13 @@
       </md-step> 
 
       <md-step id="guests" md-label="Guests">
-        <GuestData v-for="guest in searchResultsGuests" :key="guest.id" :guest="guest" :lastSaveRequest="lastSaveRequest"></GuestData>
+        <GuestData 
+          v-for="guest in searchResultsGuests" 
+          :key="guest.id" 
+          :guest="guest" 
+          @newGuestChange="newGuestChange"
+        ></GuestData>
+
         <md-button class="md-primary md-raised" @click="saveChanges">Send my invite!</md-button>
         <md-button @click="activeStep = 'family'">Back</md-button>
       </md-step>
@@ -98,7 +104,10 @@
         console.log('index -> saveChanges()')
         // lastSaveRequest is a 'watched prop' in the family/guest child elements.
         // Change this value triggers the children to save to firebase
-        this.lastSaveRequest = new Date()
+        // this.lastSaveRequest = new Date()
+      },
+      newGuestChange (guestId, data) {
+        console.log('newGuestChange for', guestId, data)
       }
     },
     created () {
