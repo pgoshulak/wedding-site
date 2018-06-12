@@ -22,7 +22,6 @@
 </template>
 
 <script>
-  import { db } from '../../../main.js'
   export default {
     props: ['guest', 'lastSaveRequest'],
     data () {
@@ -42,22 +41,6 @@
         let changedData = {}
         changedData[e.target.id] = e.target.value
         this.$emit('newGuestChange', this.guest.id, changedData)
-      },
-      saveToDatabase () {
-        db.collection('guests').doc(this.guest.id).set({
-          email: this.guestEmail,
-          phone: this.guestPhone
-        }, {merge: true}).then(() => {
-          this.$emit('changesSaved')
-        }).catch(err => {
-          console.error(err)
-        })
-      }
-    },
-    watch: {
-      lastSaveRequest (val) {
-        console.log('GuestData -> lastSaveRequest at', val)
-        this.saveToDatabase()
       }
     },
     created () {

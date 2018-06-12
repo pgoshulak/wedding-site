@@ -13,7 +13,11 @@
 
       <md-step id="family" md-label="Address">
         <p>Where should your invitation be sent?</p>
-        <FamilyData :familyId="foundFamilyId" :resultData="searchResultsFamily" :lastSaveRequest="lastSaveRequest"/>
+        <FamilyData 
+          :familyId="foundFamilyId" 
+          :resultData="searchResultsFamily" 
+          @newFamilyChange="newFamilyChange"
+          />
         <md-button class="md-primary md-raised" @click="activeStep = 'guests'">Continue</md-button>
         <md-button @click="activeStep = 'accept-reject'">Back</md-button>
       </md-step> 
@@ -24,8 +28,7 @@
           :key="guest.id" 
           :guest="guest" 
           @newGuestChange="newGuestChange"
-        ></GuestData>
-
+          />
         <md-button class="md-primary md-raised" @click="saveChanges">Send my invite!</md-button>
         <md-button @click="activeStep = 'family'">Back</md-button>
       </md-step>
@@ -51,8 +54,6 @@
     data () {
       return {
         titleText: 'Address Survey',
-        guestsRef: null,
-        familiesRef: null,
         searchTerm: '',
         foundFamilyId: '',
         searchResultsFamily: {},
@@ -62,7 +63,10 @@
         // searchResultsGuests: sampleData.searchResultsGuests,
         showErrorSnackbar: false,
         errorMessage: 'Error',
-        lastSaveRequest: null
+        lastSaveRequest: null,
+        guestsRef: null,
+        familiesRef: null,
+        batchUpdates: null
       }
     },
     methods: {
@@ -101,18 +105,26 @@
           })
       },
       saveChanges () {
-        console.log('index -> saveChanges()')
-        // lastSaveRequest is a 'watched prop' in the family/guest child elements.
-        // Change this value triggers the children to save to firebase
-        // this.lastSaveRequest = new Date()
+        this.batchUpdates.commit().then(() => {
+          console.log('Successfully committed batch')
+          this.batchUpdates = db.batch()
+        }).catch(err => {
+          console.error('Error committing batch:', err)
+        })
       },
       newGuestChange (guestId, data) {
-        console.log('newGuestChange for', guestId, data)
+        let thisGuestRef = this.guestsRef.doc(guestId)
+        this.batchUpdates.set(thisGuestRef, data, {merge: true})
+      },
+      newFamilyChange (data) {
+        let thisFamilyRef = this.familiesRef.doc(this.foundFamilyId)
+        this.batchUpdates.set(thisFamilyRef, data, {merge: true})
       }
     },
     created () {
       this.guestsRef = db.collection('guests')
       this.familiesRef = db.collection('families')
+      this.batchUpdates = db.batch()
     },
     components: {
       SearchArea,
