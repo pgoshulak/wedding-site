@@ -1,7 +1,7 @@
 <template>
   <div id="address-survey">
     <!-- <h3 class="md-headline">{{titleText}}</h3> -->
-    <SearchArea v-if="searchResultsGuests.length==0" @submitSearch="submitSearch"></SearchArea>
+    <SearchArea v-if="searchResultsGuests.length==0" @submitSearch="submitSearch" :isLoading="isLoading"></SearchArea>
 
     <md-steppers v-else md-vertical :md-active-step.sync="activeStep">
 
@@ -29,7 +29,10 @@
           :guest="guest" 
           @newGuestChange="newGuestChange"
           />
-        <md-button class="md-primary md-raised" @click="saveChanges">Send my invite!</md-button>
+        <md-button class="md-primary md-raised" @click="saveChanges" :disabled="isLoading">
+          <md-progress-spinner id="submit-spinner" v-if="isLoading" :md-diameter="12" :md-stroke="2" md-mode="indeterminate"></md-progress-spinner>
+          Send my invite!
+        </md-button>
         <md-button @click="activeStep = 'family'">Back</md-button>
       </md-step>
 
@@ -63,7 +66,7 @@
         // searchResultsGuests: sampleData.searchResultsGuests,
         showErrorSnackbar: false,
         errorMessage: 'Error',
-        lastSaveRequest: null,
+        isLoading: false,
         guestsRef: null,
         familiesRef: null,
         batchUpdates: null
@@ -71,6 +74,7 @@
     },
     methods: {
       submitSearch (searchTerm) {
+        this.isLoading = true
         this.searchTerm = searchTerm
         // Clear existing search results
         this.searchResultsFamily = {}
@@ -98,18 +102,25 @@
               snaps[1].forEach(snap => {
                 this.searchResultsGuests.push({...snap.data(), id: snap.id})
               })
+              this.isLoading = false
             })
           }).catch(err => {
             this.errorMessage = `Error: ${err.message}`
             this.showErrorSnackbar = true
+            this.isLoading = false
           })
       },
       saveChanges () {
+        this.isLoading = true
         this.batchUpdates.commit().then(() => {
           console.log('Successfully committed batch')
           this.batchUpdates = db.batch()
+          this.isLoading = false
         }).catch(err => {
           console.error('Error committing batch:', err)
+          this.errorMessage = `Error: ${err.message}`
+          this.showErrorSnackbar = true
+          this.isLoading = false
         })
       },
       newGuestChange (guestId, data) {
@@ -137,5 +148,9 @@
 <style >
   #survey .md-stepper-content {
     padding: 0px 12px 0px 40px
+  }
+  #submit-spinner circle {
+    stroke: #fff;
+    stroke-opacity: 0.9
   }
 </style>
