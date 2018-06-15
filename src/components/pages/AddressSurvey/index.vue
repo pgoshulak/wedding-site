@@ -5,13 +5,13 @@
 
     <md-steppers v-else md-vertical :md-active-step.sync="activeStep">
 
-      <md-step id="accept-reject" md-label="Send my invite?">
-        <p>Welcome, {{searchResultsFamily.name || "no name"}}</p>
+      <!-- <md-step id="accept-reject" md-label="Send my invite?">
         <md-button class="md-primary md-raised" @click="activeStep = 'family'">Send my invite</md-button>
         <md-button>We cannot attend</md-button>
-      </md-step>
+      </md-step> -->
 
       <md-step id="family" md-label="Address">
+        <p>Welcome, {{searchResultsFamily.name || "no name"}}</p>
         <p>Where should your invitation be sent?</p>
         <FamilyData 
           :familyId="foundFamilyId" 
@@ -19,7 +19,7 @@
           @newFamilyChange="newFamilyChange"
           />
         <md-button class="md-primary md-raised" @click="activeStep = 'guests'">Continue</md-button>
-        <md-button @click="activeStep = 'accept-reject'">Back</md-button>
+        <md-button>Early rsvp</md-button>
       </md-step> 
 
       <md-step id="guests" md-label="Guests">
@@ -61,7 +61,7 @@
         foundFamilyId: '',
         searchResultsFamily: {},
         searchResultsGuests: [],
-        activeStep: 'accept-reject',
+        activeStep: 'family',
         // searchResultsFamily: sampleData.searchResultsFamily,
         // searchResultsGuests: sampleData.searchResultsGuests,
         showErrorSnackbar: false,
