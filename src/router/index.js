@@ -10,6 +10,9 @@ const AddressSurvey = () => import('@/components/pages/AddressSurvey' /* webpack
 const Registry = () => import('@/components/pages/Registry' /* webpackChunkName: "chunk-registry" */)
 const Photos = () => import('@/components/pages/Photos' /* webpackChunkName: "chunk-photos" */)
 
+const ConfirmSubmit = () => import('@/components/pages/AddressSurvey/ConfirmSubmit' /* webpackChunkName: "chunk-confirm-submit" */)
+const ConfirmReject = () => import('@/components/pages/AddressSurvey/ConfirmReject' /* webpackChunkName: "chunk-confirm-reject" */)
+
 Vue.use(Router)
 
 export default new Router({
@@ -54,6 +57,16 @@ export default new Router({
       path: '/photos',
       name: 'Photos',
       component: Photos
+    },
+    {
+      path: '/confirm-submit',
+      name: 'ConfirmSubmit',
+      component: ConfirmSubmit
+    },
+    {
+      path: '/confirm-reject',
+      name: 'ConfirmReject',
+      component: ConfirmReject
     }
   ]
 })

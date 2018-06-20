@@ -19,7 +19,7 @@
           @newFamilyChange="newFamilyChange"
           />
         <md-button class="md-primary md-raised" @click="activeStep = 'guests'">Continue</md-button>
-        <md-button>Early rsvp</md-button>
+        <md-button @click="rejectPlaceholder">Early rsvp</md-button>
       </md-step> 
 
       <md-step id="guests" md-label="Guests">
@@ -113,9 +113,9 @@
       saveChanges () {
         this.isLoading = true
         this.batchUpdates.commit().then(() => {
-          console.log('Successfully committed batch')
-          this.batchUpdates = db.batch()
-          this.isLoading = false
+          // this.batchUpdates = db.batch()
+          // this.isLoading = false
+          this.$router.push('confirm-submit')
         }).catch(err => {
           console.error('Error committing batch:', err)
           this.errorMessage = `Error: ${err.message}`
@@ -130,6 +130,9 @@
       newFamilyChange (data) {
         let thisFamilyRef = this.familiesRef.doc(this.foundFamilyId)
         this.batchUpdates.set(thisFamilyRef, data, {merge: true})
+      },
+      rejectPlaceholder () {
+        this.$router.push('confirm-reject')
       }
     },
     created () {
