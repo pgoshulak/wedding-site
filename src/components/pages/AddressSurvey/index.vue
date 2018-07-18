@@ -5,31 +5,28 @@
 
     <md-steppers v-else md-vertical :md-active-step.sync="activeStep">
 
-      <!-- <md-step id="accept-reject" md-label="Send my invite?">
-        <md-button class="md-primary md-raised" @click="activeStep = 'family'">Send my invite</md-button>
-        <md-button>We cannot attend</md-button>
-      </md-step> -->
-
       <md-step id="family" md-label="Address">
-        <p>Welcome, {{searchResultsFamily.name || "no name"}}</p>
-        <p>Where should your invitation be sent?</p>
+        <md-button class="md-raised" id="reject-btn" @click="showRsvpRejectDialog = true">We cannot attend</md-button>
+        <p>Hello, <strong>{{searchResultsFamily.name || "no name"}}</strong>!
+        Where should your invitation be sent?</p>
         <FamilyData 
           :familyId="foundFamilyId" 
           :resultData="searchResultsFamily" 
           @newFamilyChange="newFamilyChange"
           />
-        <md-button class="md-primary md-raised" @click="activeStep = 'guests'">Continue</md-button>
-        <md-button @click="rejectPlaceholder">Early rsvp</md-button>
+        <md-button class="md-primary md-raised" @click="activeStep = 'guests'">Next</md-button>
       </md-step> 
 
-      <md-step id="guests" md-label="Guests">
+      <md-step id="guests" :md-label="`Guests ${searchResultsGuests ? '(' + searchResultsGuests.length + ')' : ''}`">
+        <p>Your email and phone number are optional. You will have the choice of receiving updates, 
+          such as receiving directions to the venue via text message on the wedding day</p>
         <GuestData 
           v-for="guest in searchResultsGuests" 
           :key="guest.id" 
           :guest="guest" 
           @newGuestChange="newGuestChange"
           />
-        <md-button class="md-primary md-raised" @click="saveChanges" :disabled="isLoading">
+        <md-button class="md-primary md-raised" @click="saveChanges('submit')" :disabled="isLoading">
           <md-progress-spinner id="submit-spinner" v-if="isLoading" :md-diameter="12" :md-stroke="2" md-mode="indeterminate"></md-progress-spinner>
           Send my invite!
         </md-button>
@@ -43,6 +40,23 @@
       {{errorMessage}}
       <md-button class="md-primary" @click="showErrorSnackbar = false">Dismiss</md-button>
     </md-snackbar>
+
+    <!-- Dialog for early RSVP "reject" -->
+    <md-dialog :md-active.sync="showRsvpRejectDialog">
+      <md-dialog-title>Send RSVP "no"?</md-dialog-title>
+      <md-dialog-content>
+        Are you sure you cannot attend Steph and Peter's wedding on June 1 2019? 
+        By clicking &laquo; RSVP "NO" &raquo;, you will not receive an invitation.
+      </md-dialog-content>
+      <md-dialog-actions>
+        <md-button id="reject-warning" class="md-raised" @click="confirmRejection">
+          <md-progress-spinner id="submit-spinner" v-if="isLoading" :md-diameter="12" :md-stroke="2" md-mode="indeterminate"></md-progress-spinner>
+          RSVP "no"
+        </md-button>
+        <md-button class="md-raised" @click="showRsvpRejectDialog = false">cancel, please send my invite</md-button>
+      </md-dialog-actions>
+    </md-dialog>
+
   </div>
 </template>
 
@@ -65,6 +79,7 @@
         // searchResultsFamily: sampleData.searchResultsFamily,
         // searchResultsGuests: sampleData.searchResultsGuests,
         showErrorSnackbar: false,
+        showRsvpRejectDialog: false,
         errorMessage: 'Error',
         isLoading: false,
         guestsRef: null,
@@ -110,12 +125,14 @@
             this.isLoading = false
           })
       },
-      saveChanges () {
+      saveChanges (type = 'submit') {
         this.isLoading = true
         this.batchUpdates.commit().then(() => {
-          // this.batchUpdates = db.batch()
-          // this.isLoading = false
-          this.$router.push('confirm-submit')
+          if (type === 'submit') {
+            this.$router.push('confirm-submit')
+          } else {
+            this.$router.push('confirm-reject')
+          }
         }).catch(err => {
           console.error('Error committing batch:', err)
           this.errorMessage = `Error: ${err.message}`
@@ -131,8 +148,11 @@
         let thisFamilyRef = this.familiesRef.doc(this.foundFamilyId)
         this.batchUpdates.set(thisFamilyRef, data, {merge: true})
       },
-      rejectPlaceholder () {
-        this.$router.push('confirm-reject')
+      confirmRejection () {
+        for (let guest of this.searchResultsGuests) {
+          this.newGuestChange(guest.id, {rsvp: false})
+        }
+        this.saveChanges('reject')
       }
     },
     created () {
@@ -155,5 +175,14 @@
   #submit-spinner circle {
     stroke: #fff;
     stroke-opacity: 0.9
+  }
+
+  #reject-btn {
+    float: right;
+  }
+
+  #reject-warning {
+    background-color: #f44336;
+    color: white;
   }
 </style>
