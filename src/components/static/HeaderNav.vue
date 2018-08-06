@@ -36,24 +36,9 @@ export default {
           to: 'location'
         },
         {
-          id: 'accommodations',
-          label: 'Accomodations',
-          to: 'accommodations'
-        },
-        {
-          id: 'registry',
-          label: 'Registry',
-          to: 'registry'
-        },
-        {
           id: 'photos',
           label: 'Photos',
           to: 'photos'
-        },
-        {
-          id: 'admin',
-          label: 'Admin',
-          to: 'admin'
         }
       ]
     }

@@ -1,6 +1,7 @@
 # Todos
 ## Design
-- [ ] move Accomodations into Location
+- [x] move Accomodations into Location
+- [ ] add Hotel Shuttle info
 - [ ] populate Home with basic info
 - [ ] fill Our-Story
 - [ ] update photos
