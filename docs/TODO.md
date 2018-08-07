@@ -5,10 +5,12 @@
 - [ ] populate Home with basic info
 - [ ] fill Our-Story
 - [ ] update photos
+- [ ] Add proper caption to photos
 - [ ] clean up menu links
+- [ ] mask/validate phone number in Address Survey > Guests
 
 ## Logic
-- [ ] add phone number lookup to survey
+- [x] add phone number lookup to survey
 - [ ] change RSVP to string
 - [ ] investigate mailer
 - [ ] investigate Twilio

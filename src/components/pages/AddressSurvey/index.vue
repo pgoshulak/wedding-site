@@ -88,7 +88,7 @@
       }
     },
     methods: {
-      submitSearch (searchTerm) {
+      submitSearch (searchTerm, searchType) {
         this.isLoading = true
         this.searchTerm = searchTerm
         // Clear existing search results
@@ -96,11 +96,11 @@
         this.searchResultsGuests = []
 
         // Fetch the single guest matching the email address
-        this.guestsRef.where('email', '==', searchTerm).get()
+        this.guestsRef.where(searchType, '==', searchTerm).get()
           .then(snap1 => {
             // No results
             if (snap1.empty) {
-              throw new Error(`Could not find email "${searchTerm}"`)
+              throw new Error(`Could not find ${searchType} "${searchTerm}"`)
             }
             // Retrieve the guest's familyId
             const familyId = snap1.docs[0].data().familyId
