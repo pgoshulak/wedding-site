@@ -13,7 +13,7 @@
       <div class="md-layout-item md-size-25 md-xsmall-size-40">
         <md-field :md-counter="false">
           <label for="phone">Phone <small>(Optional)</small></label>
-          <md-input id="phone" v-model="guestPhone" @change="newGuestChange"></md-input>
+          <md-input id="phone" type="tel" v-model="guestPhone" @change="newGuestChange"></md-input>
         </md-field>
       </div>
     </div>

@@ -46,7 +46,7 @@
       <md-dialog-title>Send RSVP "no"?</md-dialog-title>
       <md-dialog-content>
         Are you sure you cannot attend Steph and Peter's wedding on June 1 2019? 
-        By clicking &laquo; RSVP "NO" &raquo;, you will not receive an invitation.
+        By clicking <kbd class="reject-outline">RSVP&nbsp;"NO"</kbd>, you will not receive an invitation.
       </md-dialog-content>
       <md-dialog-actions>
         <md-button id="reject-warning" class="md-raised" @click="confirmRejection">
@@ -66,18 +66,17 @@
   import FamilyData from './FamilyData'
   import GuestData from './GuestData'
   // import sampleData from './sample-data.json'
-  
+  let sampleData = null
+
   export default {
     data () {
       return {
         titleText: 'Address Survey',
         searchTerm: '',
         foundFamilyId: '',
-        searchResultsFamily: {},
-        searchResultsGuests: [],
+        searchResultsFamily: sampleData ? sampleData.searchResultsFamily : {},
+        searchResultsGuests: sampleData ? sampleData.searchResultsGuests : [],
         activeStep: 'family',
-        // searchResultsFamily: sampleData.searchResultsFamily,
-        // searchResultsGuests: sampleData.searchResultsGuests,
         showErrorSnackbar: false,
         showRsvpRejectDialog: false,
         errorMessage: 'Error',
@@ -184,5 +183,11 @@
   #reject-warning {
     background-color: #f44336;
     color: white;
+  }
+  .reject-outline {
+    border: 1px solid #f44336;
+    color: #f44336;
+    padding: 2px 4px;
+    margin: initial 2px;
   }
 </style>

@@ -7,7 +7,7 @@
 - [ ] update photos
 - [ ] Add proper caption to photos
 - [ ] clean up menu links
-- [ ] mask/validate phone number in Address Survey > Guests
+- [x] mask/validate phone number in Address Survey > Guests (temp: set input type="tel")
 
 ## Logic
 - [x] add phone number lookup to survey
