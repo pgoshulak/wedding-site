@@ -2,7 +2,8 @@
 ## Design
 - [x] move Accomodations into Location
 - [ ] add Hotel Shuttle info
-- [ ] populate Home with basic info
+- [ ] add all components to home page
+- [ ] make address-survey into Modal popup
 - [ ] fill Our-Story
 - [ ] update photos
 - [ ] Add proper caption to photos
