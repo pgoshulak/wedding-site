@@ -11,6 +11,7 @@
         <router-link tag="a" to="/our-story"> origin story </router-link>
       </p>
     </md-empty-state>
+    <slot/>
   </div>
 </template>
 

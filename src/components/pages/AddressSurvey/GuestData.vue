@@ -3,14 +3,14 @@
     <span class="md-title">{{guest.name}}</span>
 
     <div class="md-layout md-gutter md-alignment-center-left">
-      <div class="md-layout-item md-size-40 md-xsmall-size-60">
+      <div class="md-layout-item md-size-40 md-small-size-60 md-xsmall-size-100">
         <md-field :md-counter="false">
           <label for="email">Email <small>(Optional)</small></label>
           <md-input id="email" v-model="guestEmail" @change="newGuestChange"></md-input>
         </md-field>
       </div>
 
-      <div class="md-layout-item md-size-25 md-xsmall-size-40">
+      <div class="md-layout-item md-size-25 md-small-size-40 md-xsmall-size-100">
         <md-field :md-counter="false">
           <label for="phone">Phone <small>(Optional)</small></label>
           <md-input id="phone" type="tel" v-model="guestPhone" @change="newGuestChange"></md-input>

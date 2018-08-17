@@ -1,14 +1,20 @@
 <template>
   <div id="address-survey">
     <!-- <h3 class="md-headline">{{titleText}}</h3> -->
-    <SearchArea v-if="searchResultsGuests.length==0" @submitSearch="submitSearch" :isLoading="isLoading"></SearchArea>
+    <SearchArea v-if="searchResultsGuests.length==0" @submitSearch="submitSearch" :isLoading="isLoading">
+      <md-button @click="$emit('closeAddressSurvey')">Back</md-button>
+    </SearchArea>
 
-    <md-steppers v-else md-vertical :md-active-step.sync="activeStep">
+    <md-steppers v-else-if="completedType===''" md-vertical :md-active-step.sync="activeStep">
 
       <md-step id="family" md-label="Address">
-        <md-button class="md-raised" id="reject-btn" @click="showRsvpRejectDialog = true">We cannot attend</md-button>
-        <p>Hello, <strong>{{searchResultsFamily.name || "no name"}}</strong>!
-        Where should your invitation be sent?</p>
+        <!-- <md-button class="md-raised" id="reject-btn" @click="showRsvpRejectDialog = true">We cannot attend</md-button> -->
+        <p>
+          Hello, <strong>{{searchResultsFamily.name || "no name"}}</strong>!
+          Where should your invitation be sent?
+          <br/>
+          <small class="text-muted">(Can't attend? <a @click="showRsvpRejectDialog=true">Click here</a>)</small>
+        </p>
         <FamilyData 
           :familyId="foundFamilyId" 
           :resultData="searchResultsFamily" 
@@ -33,7 +39,15 @@
         <md-button @click="activeStep = 'family'">Back</md-button>
       </md-step>
 
-    </md-steppers> 
+    </md-steppers>
+
+    <ConfirmSubmit v-else-if="completedType==='submit'">
+      <md-button @click="$emit('closeAddressSurvey')">Back</md-button>
+    </ConfirmSubmit>
+
+    <ConfirmReject v-else-if="completedType==='reject'">
+      <md-button @click="$emit('closeAddressSurvey')">Back</md-button>
+    </ConfirmReject>
     
     <!-- Snackbar popup for error display -->
     <md-snackbar :md-duration="4000" :md-active.sync="showErrorSnackbar" md-persistent>
@@ -53,7 +67,7 @@
           <md-progress-spinner id="submit-spinner" v-if="isLoading" :md-diameter="12" :md-stroke="2" md-mode="indeterminate"></md-progress-spinner>
           RSVP "no"
         </md-button>
-        <md-button class="md-raised" @click="showRsvpRejectDialog = false">cancel, please send my invite</md-button>
+        <md-button class="md-raised" @click="showRsvpRejectDialog = false">cancel, send my invite</md-button>
       </md-dialog-actions>
     </md-dialog>
 
@@ -65,6 +79,9 @@
   import SearchArea from './SearchArea'
   import FamilyData from './FamilyData'
   import GuestData from './GuestData'
+  import ConfirmSubmit from './ConfirmSubmit'
+  import ConfirmReject from './ConfirmReject'
+
   // import sampleData from './sample-data.json'
   let sampleData = null
 
@@ -83,7 +100,8 @@
         isLoading: false,
         guestsRef: null,
         familiesRef: null,
-        batchUpdates: null
+        batchUpdates: null,
+        completedType: ''
       }
     },
     methods: {
@@ -128,9 +146,12 @@
         this.isLoading = true
         this.batchUpdates.commit().then(() => {
           if (type === 'submit') {
-            this.$router.push('confirm-submit')
+            // this.$router.push('confirm-submit')
+            this.completedType = 'submit'
           } else {
-            this.$router.push('confirm-reject')
+            // this.$router.push('confirm-reject')
+            this.completedType = 'reject'
+            this.showRsvpRejectDialog = false
           }
         }).catch(err => {
           console.error('Error committing batch:', err)
@@ -162,7 +183,9 @@
     components: {
       SearchArea,
       FamilyData,
-      GuestData
+      GuestData,
+      ConfirmSubmit,
+      ConfirmReject
     }
   }
 </script>
@@ -176,6 +199,7 @@
     stroke-opacity: 0.9
   }
 
+  /* @media screen and (min-width: ); */
   #reject-btn {
     float: right;
   }
@@ -189,5 +213,9 @@
     color: #f44336;
     padding: 2px 4px;
     margin: initial 2px;
+  }
+
+  .text-muted {
+    color: #666;
   }
 </style>

@@ -8,10 +8,11 @@
         <label>Email or Phone Number</label>
         <md-input id="searchInput" v-model="searchInput" @keyup.enter="submitSearch"></md-input>
       </md-field>
-      <md-button id="btnSearch" class="" @click="submitSearch" :disabled="isLoading || !searchType">
+      <md-button id="btnSearch" :class="!!searchType && 'md-primary md-raised' " @click="submitSearch" :disabled="isLoading || !searchType">
         <md-progress-spinner v-if="isLoading" :md-diameter="12" :md-stroke="2" md-mode="indeterminate"></md-progress-spinner>
         Search {{searchType}}!
       </md-button>
+      <slot/>
     </md-empty-state>
   </div>
 </template>
