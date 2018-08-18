@@ -11,7 +11,7 @@
       <OurStory></OurStory>
     </section>
 
-    <section id="Location">
+    <section id="location">
       <Location></Location>
     </section>
     
@@ -37,11 +37,16 @@
 </template>
 
 <script>
-  import AddressSurvey from './AddressSurvey'
+  // import AddressSurvey from './AddressSurvey'
   import Countdown from '../misc/Countdown'
-  import Photos from './Photos'
-  import Location from './Location'
-  import OurStory from './OurStory'
+  // import Photos from './Photos'
+  // import Location from './Location'
+  // import OurStory from './OurStory'
+  const OurStory = () => import('@/components/pages/OurStory' /* webpackChunkName: "chunk-our-story" */)
+  const Location = () => import('@/components/pages/Location' /* webpackChunkName: "chunk-location" */)
+  const AddressSurvey = () => import('@/components/pages/AddressSurvey' /* webpackChunkName: "chunk-address-survey" */)
+  const Photos = () => import('@/components/pages/Photos' /* webpackChunkName: "chunk-photos" */)
+
   export default {
     name: 'Home',
     data () {

@@ -16,29 +16,29 @@ export default {
     return {
       links: [
         {
-          id: 'home',
+          id: 'home-link',
           label: 'Home',
           to: '/'
         },
         {
-          id: 'address-survey',
+          id: 'address-survey-link',
           label: 'Address Survey',
-          to: 'address-survey'
+          to: '#address-survey'
         },
         {
-          id: 'our-story',
+          id: 'our-story-link',
           label: 'Our Story',
-          to: '/our-story'
+          to: '#our-story'
         },
         {
-          id: 'location',
+          id: 'location-link',
           label: 'Location',
-          to: 'location'
+          to: '#location'
         },
         {
-          id: 'photos',
+          id: 'photos-link',
           label: 'Photos',
-          to: 'photos'
+          to: '#photos'
         }
       ]
     }
