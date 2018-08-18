@@ -1,6 +1,6 @@
 <template>
   <div id="location">
-    <h3 class="md-display-1">Location</h3>
+    <h3 class="md-display-2">Location</h3>
 
     <div id="farm-entrance">
       <img src="../../assets/farm_xxs.jpg" alt="Earth to Table: The Farm">
@@ -8,15 +8,10 @@
 
     <h5 class="md-title">Earth to Table: The Farm</h5>
     <a :href="directionsHref" target="_blank">250 Concession 4 W, Millgrove, ON L8B 1J3</a> (just north of Hamilton)
-    <!-- <md-button class="md-raised" :href="directionsHref" target="_blank">
-      <md-icon>directions</md-icon>
-      Directions
-    </md-button> -->
-    
     
     <p>The outdoor ceremony begins at 4:00pm, with indoor reception and dinner to follow. Dress code is semi-formal.</p>
 
-    <h3 class="md-display-1">Accomodations</h3>
+    <h5 class="md-title">Accomodations</h5>
     <p>We have reserved room blocks at the following hotels in nearby Hamilton. Please ask for Barraco/Goshulak wedding:</p>
     <ul>
       <li><a href="http://www.visitorsinn.com/">Visitors Inn</a></li>
@@ -63,7 +58,7 @@ div#farm-entrance {
 
   & > img {
       display: block;
-      margin: 0 auto;
+      margin: 8px auto;
     }
 }
 </style>

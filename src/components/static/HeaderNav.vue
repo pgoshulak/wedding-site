@@ -22,7 +22,7 @@ export default {
         },
         {
           id: 'address-survey-link',
-          label: 'Address Survey',
+          label: 'Invitation',
           to: '#address-survey'
         },
         {

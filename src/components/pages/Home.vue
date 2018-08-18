@@ -1,9 +1,10 @@
 <template>
   <div id="home">
-    <h3 class="md-display-1">Saturday June 1, 2019 4:00pm</h3>
-    <Countdown></Countdown>
+    <h3 class="md-display-1 main-date">Saturday June 1, 2019 at 4:00pm <br/> <small>Hamilton, ON</small></h3>
+    <!-- <Countdown></Countdown> -->
 
     <section id="address-survey">
+      We're very excited to celebrate our wedding with you! Please click below to tell us where to send your invitation:
       <md-button class="md-primary" @click="showAddressSurvey=true">Submit Address</md-button>
     </section>
 
@@ -64,10 +65,32 @@
   }
 </script>
 
-<style>
+<style lang="scss">
 
 section {
   margin-bottom: 80px;
+}
+h3.main-date {
+  text-align: center;
+}
+h3.md-display-2 {
+  text-align: center;
+
+  @media screen and (min-width: 600px) {
+    &::before, &::after {
+      display: inline-block;
+      content: '';
+      border-top: 1px solid rgba(0,0,0,0.5);
+      width: 100px;
+      margin: 0 20px;
+      transform: translateY(-1rem)
+    }
+  }
+  @media screen and (max-width: 599px) {
+    border-top: 1px solid rgba(0,0,0,0.5);
+    border-bottom: 1px solid rgba(0,0,0,0.5);
+    line-height: 80px;
+  }
 }
 
 </style>

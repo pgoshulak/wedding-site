@@ -10,6 +10,8 @@
 - [ ] clean up menu links
 - [x] mask/validate phone number in Address Survey > Guests (temp: set input type="tel")
 - [x] fix z-index on menu for mobile view
+- [ ] add footer
+- [ ] make top menu sticky
 
 ## Logic
 - [x] add phone number lookup to survey

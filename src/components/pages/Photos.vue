@@ -1,6 +1,6 @@
 <template>
   <div id="home">
-    <h3 class="md-display-1">Photo Gallery</h3>
+    <h3 class="md-display-2">Photos</h3>
     <div id="thumbnails">
       <div class="thumbnail" v-for="(photo, index) in photoList" :key="index">
         <img :alt="photo.caption" v-lazy="photo.thumb" @click="openLightbox(index)">
