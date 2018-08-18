@@ -2,7 +2,24 @@
   <div id="home">
     <h3 class="md-display-1">Saturday June 1, 2019 4:00pm</h3>
     <Countdown></Countdown>
-    <md-button class="md-primary" @click="showAddressSurvey=true">Submit Address</md-button>
+
+    <section id="address-survey">
+      <md-button class="md-primary" @click="showAddressSurvey=true">Submit Address</md-button>
+    </section>
+
+    <section id="our-story">
+      <OurStory></OurStory>
+    </section>
+
+    <section id="Location">
+      <Location></Location>
+    </section>
+    
+    <section id="photos">
+      <Photos></Photos>
+    </section>
+
+
 
     <md-dialog 
       :md-active.sync="showAddressSurvey"
@@ -22,6 +39,9 @@
 <script>
   import AddressSurvey from './AddressSurvey'
   import Countdown from '../misc/Countdown'
+  import Photos from './Photos'
+  import Location from './Location'
+  import OurStory from './OurStory'
   export default {
     name: 'Home',
     data () {
@@ -31,11 +51,18 @@
     },
     components: {
       Countdown,
-      AddressSurvey
+      AddressSurvey,
+      Photos,
+      Location,
+      OurStory
     }
   }
 </script>
 
 <style>
+
+section {
+  margin-bottom: 80px;
+}
 
 </style>

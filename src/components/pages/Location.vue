@@ -1,9 +1,19 @@
 <template>
   <div id="location">
     <h3 class="md-display-1">Location</h3>
-    <p>Steph and Peter will be married at <em>Earth to Table: The Farm </em>
-      <a :href="directionsHref" target="_blank">(directions)</a>
-      , near Hamilton ON.</p>
+
+    <div id="farm-entrance">
+      <img src="../../assets/farm_xxs.jpg" alt="Earth to Table: The Farm">
+    </div>
+
+    <h5 class="md-title">Earth to Table: The Farm</h5>
+    <a :href="directionsHref" target="_blank">250 Concession 4 W, Millgrove, ON L8B 1J3</a> (just north of Hamilton)
+    <!-- <md-button class="md-raised" :href="directionsHref" target="_blank">
+      <md-icon>directions</md-icon>
+      Directions
+    </md-button> -->
+    
+    
     <p>The outdoor ceremony begins at 4:00pm, with indoor reception and dinner to follow. Dress code is semi-formal.</p>
 
     <h3 class="md-display-1">Accomodations</h3>
@@ -33,7 +43,7 @@
   }
 </script>
 
-<style>
+<style lang="scss">
 iframe {
   width: 100%;
   min-height: 400px;
@@ -41,5 +51,19 @@ iframe {
 }
 a {
   font-weight: bold;
+}
+div#farm-entrance {
+  @media screen and (max-width: 600px) {
+    width: 100%;
+  }
+  @media screen and (min-width: 600px) {
+    float: right;
+    margin-right: 20px;
+  }
+
+  & > img {
+      display: block;
+      margin: 0 auto;
+    }
 }
 </style>

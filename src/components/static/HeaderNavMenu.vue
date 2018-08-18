@@ -36,7 +36,7 @@
   position: fixed;
   right: 10px;
   top: 10px;
-  z-index: 999 !important;
+  z-index: 9 !important;
 }
 .md-menu-content {
   max-height: 75%;
