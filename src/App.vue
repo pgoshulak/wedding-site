@@ -8,7 +8,7 @@
       <md-content class="md-layout-item md-size-70 md-large-size-70 md-medium-size-80 md-small-size-90 md-xsmall-size-100">
         <banner-image></banner-image>
 
-        <header-nav></header-nav>
+        <header-nav id="header-nav"></header-nav>
         <div id="router-view-container">
           <router-view></router-view>
         </div>
@@ -46,6 +46,11 @@ input {
 }
 main {
   min-height: 100vh
+}
+
+#header-nav {
+  position: sticky;
+  top: -1px;
 }
 
 </style>

@@ -22,6 +22,8 @@
   }
 </script>
 
-<style scoped>
-
+<style>
+.md-tabs-indicator {
+  display: none;
+}
 </style>

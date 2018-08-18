@@ -31,9 +31,9 @@ img {
   object-fit: cover;
   top: -60%;
   width: 100%;
-  &.development {
+  /* &.development {
     filter: blur(15px);
-  }
+  } */
 }
 #title-text {
   position: absolute;

@@ -4,8 +4,11 @@
     <!-- <Countdown></Countdown> -->
 
     <section id="address-survey">
-      We're very excited to celebrate our wedding with you! Please click below to tell us where to send your invitation:
-      <md-button class="md-primary" @click="showAddressSurvey=true">Submit Address</md-button>
+      <p>We're very excited to celebrate our wedding with you! Please tell us where to send your invitation:</p>
+      <md-button id="address-survey-button" class="md-primary md-raised" @click="showAddressSurvey=true">
+        <md-icon>mail</md-icon>
+        Submit Address
+      </md-button>
     </section>
 
     <section id="our-story">
@@ -91,6 +94,10 @@ h3.md-display-2 {
     border-bottom: 1px solid rgba(0,0,0,0.5);
     line-height: 80px;
   }
+}
+#address-survey-button {
+  width: 100%;
+  margin: auto;
 }
 
 </style>
