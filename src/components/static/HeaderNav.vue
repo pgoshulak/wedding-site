@@ -17,13 +17,8 @@ export default {
       links: [
         {
           id: 'home-link',
-          label: 'Home',
+          label: 'Save the Date',
           to: '/'
-        },
-        {
-          id: 'address-survey-link',
-          label: 'Invitation',
-          to: '#address-survey'
         },
         {
           id: 'our-story-link',

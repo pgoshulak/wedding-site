@@ -1,14 +1,17 @@
 <template>
   <div id="home">
-    <h3 class="md-display-1 main-date">Saturday June 1, 2019 at 4:00pm <br/> <small>Hamilton, ON</small></h3>
+    <h3 class="md-display-2">Save the Date</h3>
+    <h3 class="md-title main-date">Saturday June 1, 2019 at 4:00pm <br/> <small>Hamilton, ON</small></h3>
     <!-- <Countdown></Countdown> -->
 
     <section id="address-survey">
       <p>We're very excited to celebrate our wedding with you! Please tell us where to send your invitation:</p>
-      <md-button id="address-survey-button" class="md-primary md-raised" @click="showAddressSurvey=true">
-        <md-icon>mail</md-icon>
-        Submit Address
-      </md-button>
+      <div id="address-survey-button-container">
+        <md-button id="address-survey-button" class="md-primary md-raised" @click="showAddressSurvey=true">
+          <md-icon>mail</md-icon>
+          Submit Address
+        </md-button>
+      </div>
     </section>
 
     <section id="our-story">
@@ -95,9 +98,13 @@ h3.md-display-2 {
     line-height: 80px;
   }
 }
-#address-survey-button {
+#address-survey-button-container {
   width: 100%;
-  margin: auto;
+  text-align: center;
+  & > button {
+    max-width: 300px;
+    width: 300px;
+  }
 }
 
 </style>
