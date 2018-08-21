@@ -8,7 +8,7 @@
     </p><p>
       It wasn’t until a rainy day in August 2016 when they met at University and Dundas. Peter walked Steph towards her car under his umbrella, and he worked up the courage to ask her out later that night. This time, Steph played cool-girl-who-accepts, and on their first date they discussed their passions for juggling (Steph) and magic tricks (Peter). Clearly, these two dorks were meant for each other.
     </p><p>
-      Fast-forward through 15 months of acro-yoga, puns, and accidentally-matched outfits to December 15 2017, where Steph and Peter are vacationing in Hawaii with their Best Frands (aka. Passion Trio and Rojo). Peter tricks Steph into some acro-yoga at Shipwreck's Beach, then gets down on one knee exactly at sunset (how precisely planned!). She gasped in incredulity, said yes, and … well, now we want YOU to help us celebrate!
+      Fast-forward through 15 months of acro-yoga, puns, and accidentally-matched outfits to December 15 2017, where Steph and Peter are vacationing with their Best Frands (aka. Passion Trio and Rojo). While strolling down Shipwreck's Beach near Koloa, Hawaii, Peter tricks Steph into some acro-yoga, then gets down on one knee exactly at sunset (how precisely planned!). She gasped in incredulity, said yes, and … well, now we want YOU to help us celebrate!
     </p>
 
   </div>

@@ -12,20 +12,24 @@
         <div id="router-view-container">
           <router-view></router-view>
         </div>
+    <PageFooter />
       </md-content>
       <div class="spacer md-layout-item md-xsmall-hide"></div>
     </main>
+
   </div>
 </template>
 
 <script>
 import BannerImage from './components/static/BannerImage.vue'
 import HeaderNav from './components/static/HeaderNav.vue'
+import PageFooter from './components/static/PageFooter.vue'
 export default {
   name: 'app',
   components: {
     BannerImage,
-    HeaderNav
+    HeaderNav,
+    PageFooter
   }
 }
 </script>
