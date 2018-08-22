@@ -30,7 +30,7 @@
             photos.push({
               thumb: photoData.thumbUrl,
               src: photoData.fullUrl,
-              caption: photoData.uploaded.toString()
+              caption: photoData.description || 'Peter and Steph'
             })
           })
         })

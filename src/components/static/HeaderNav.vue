@@ -23,17 +23,17 @@ export default {
         {
           id: 'our-story-link',
           label: 'Our Story',
-          to: '#our-story'
+          to: '/#our-story'
         },
         {
           id: 'location-link',
           label: 'Location',
-          to: '#location'
+          to: '/#location'
         },
         {
           id: 'photos-link',
           label: 'Photos',
-          to: '#photos'
+          to: '/#photos'
         }
       ]
     }

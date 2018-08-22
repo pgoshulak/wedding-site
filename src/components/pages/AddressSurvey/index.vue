@@ -1,6 +1,5 @@
 <template>
   <div id="address-survey">
-    <!-- <h3 class="md-headline">{{titleText}}</h3> -->
     <SearchArea v-if="searchResultsGuests.length==0" @submitSearch="submitSearch" :isLoading="isLoading">
       <md-button @click="$emit('closeAddressSurvey')">Back</md-button>
     </SearchArea>
@@ -8,7 +7,6 @@
     <md-steppers v-else-if="completedType===''" md-vertical :md-active-step.sync="activeStep">
 
       <md-step id="family" md-label="Address">
-        <!-- <md-button class="md-raised" id="reject-btn" @click="showRsvpRejectDialog = true">We cannot attend</md-button> -->
         <p>
           Hello, <strong>{{searchResultsFamily.name || "no name"}}</strong>!
           Where should your invitation be sent?
@@ -32,7 +30,7 @@
           :guest="guest" 
           @newGuestChange="newGuestChange"
           />
-        <md-button class="md-primary md-raised" @click="saveChanges('submit')" :disabled="isLoading">
+        <md-button class="md-primary md-raised" @click="confirmInviteRequest" :disabled="isLoading">
           <md-progress-spinner id="submit-spinner" v-if="isLoading" :md-diameter="12" :md-stroke="2" md-mode="indeterminate"></md-progress-spinner>
           Send my invite!
         </md-button>
@@ -170,9 +168,15 @@
       },
       confirmRejection () {
         for (let guest of this.searchResultsGuests) {
-          this.newGuestChange(guest.id, {rsvp: false})
+          this.newGuestChange(guest.id, {rsvp: 'EARLY_REJECT', timestamp: new Date()})
         }
         this.saveChanges('reject')
+      },
+      confirmInviteRequest () {
+        for (let guest of this.searchResultsGuests) {
+          this.newGuestChange(guest.id, {rsvp: 'REQUEST_INVITE', timestamp: new Date()})
+        }
+        this.saveChanges('submit')
       }
     },
     created () {

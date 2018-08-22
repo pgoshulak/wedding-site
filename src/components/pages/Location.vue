@@ -53,7 +53,7 @@ div#farm-entrance {
   }
   @media screen and (min-width: 600px) {
     float: right;
-    margin-right: 20px;
+    margin: 0px 20px 20px;
   }
 
   & > img {

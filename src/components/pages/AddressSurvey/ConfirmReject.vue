@@ -6,9 +6,9 @@
       md-description="We're sorry to hear you cannot attend">
       <p>
         We'll miss you on our big day! Please feel free to browse our
-        <router-link tag="a" to="/photos"> photo gallery </router-link>
+        <router-link tag="a" to="/#photos"> photo gallery </router-link>
         or read our
-        <router-link tag="a" to="/our-story"> origin story </router-link>
+        <router-link tag="a" to="/#our-story"> origin story </router-link>
       </p>
     </md-empty-state>
     <slot/>

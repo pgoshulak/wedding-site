@@ -3,7 +3,7 @@
     <md-empty-state 
       md-icon="search" 
       md-label="Please enter your email or phone number" 
-      md-description="You will be able to RSVP for yourself and all your guests">
+      md-description="You will be able to respond for yourself and all your guests">
       <md-field>
         <label>Email or Phone Number</label>
         <md-input id="searchInput" v-model="searchInput" @keyup.enter="submitSearch"></md-input>
