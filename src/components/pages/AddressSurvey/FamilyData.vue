@@ -3,31 +3,31 @@
     <form action="#" autocomplete="on">
       <div class="md-layout md-gutter md-alignment-center-left">
 
-        <div class="md-layout-item md-size-66 md-xsmall-size-100">
+        <div class="md-layout-item md-size-66 md-small-size-100">
           <md-field :md-counter="false">
             <label for="streetAddress">Street Address</label>
             <md-input id="streetAddress" v-model="streetAddress" @change="newFamilyChange"></md-input>
           </md-field>
         </div>
-        <div class="md-layout-item md-size-33 md-xsmall-size-50">
+        <div class="md-layout-item md-size-33 md-small-size-50">
           <md-field :md-counter="false">
             <label for="city">City</label>
             <md-input id="city" v-model="city" @change="newFamilyChange"></md-input>
           </md-field>
         </div>
-        <div class="md-layout-item md-size-33 md-xsmall-size-50">
+        <div class="md-layout-item md-size-33 md-small-size-50">
           <md-field :md-counter="false">
             <label for="province">Province/State</label>
             <md-input id="province" v-model="province" @change="newFamilyChange"></md-input>
           </md-field>
         </div>
-        <div class="md-layout-item md-size-33 md-xsmall-size-50">
+        <div class="md-layout-item md-size-33 md-small-size-50">
           <md-field :md-counter="false">
-            <label for="postalCode">Postal/Zip Code</label>
+            <label for="postalCode">Postal/Zip</label>
             <md-input id="postalCode" v-model="postalCode" @change="newFamilyChange"></md-input>
           </md-field>
         </div>
-        <div class="md-layout-item md-size-33 md-xsmall-size-50">
+        <div class="md-layout-item md-size-33 md-small-size-50">
           <md-field :md-counter="false">
             <label for="country">Country</label>
             <md-input id="country" v-model="country" @change="newFamilyChange"></md-input>

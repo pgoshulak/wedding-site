@@ -13,21 +13,21 @@
           <br/>
           <small class="text-muted">(Can't attend? <a @click="showRsvpRejectDialog=true">Click here</a>)</small>
         </p>
-        <FamilyData 
-          :familyId="foundFamilyId" 
-          :resultData="searchResultsFamily" 
+        <FamilyData
+          :familyId="foundFamilyId"
+          :resultData="searchResultsFamily"
           @newFamilyChange="newFamilyChange"
           />
         <md-button class="md-primary md-raised" @click="activeStep = 'guests'">Next</md-button>
-      </md-step> 
+      </md-step>
 
       <md-step id="guests" :md-label="`Guests ${searchResultsGuests ? '(' + searchResultsGuests.length + ')' : ''}`">
-        <p>Your email and phone number are optional. You will have the choice of receiving updates, 
+        <p>Your email and phone number are optional. You will have the choice of receiving updates,
           such as receiving directions to the venue via text message on the wedding day</p>
-        <GuestData 
-          v-for="guest in searchResultsGuests" 
-          :key="guest.id" 
-          :guest="guest" 
+        <GuestData
+          v-for="guest in searchResultsGuests"
+          :key="guest.id"
+          :guest="guest"
           @newGuestChange="newGuestChange"
           />
         <md-button class="md-primary md-raised" @click="confirmInviteRequest" :disabled="isLoading">
@@ -46,7 +46,7 @@
     <ConfirmReject v-else-if="completedType==='reject'">
       <md-button @click="$emit('closeAddressSurvey')">Back</md-button>
     </ConfirmReject>
-    
+
     <!-- Snackbar popup for error display -->
     <md-snackbar :md-duration="4000" :md-active.sync="showErrorSnackbar" md-persistent>
       {{errorMessage}}
@@ -57,7 +57,7 @@
     <md-dialog :md-active.sync="showRsvpRejectDialog">
       <md-dialog-title>Send RSVP "no"?</md-dialog-title>
       <md-dialog-content>
-        Are you sure you cannot attend Steph and Peter's wedding on June 1 2019? 
+        Are you sure you cannot attend Steph and Peter's wedding on June 1 2019?
         By clicking <kbd class="reject-outline">RSVP&nbsp;"NO"</kbd>, you will not receive an invitation.
       </md-dialog-content>
       <md-dialog-actions>

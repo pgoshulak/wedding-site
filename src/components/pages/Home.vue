@@ -3,6 +3,7 @@
     <h3 class="md-display-2">Save the Date</h3>
     <h3 class="md-title main-date">Saturday June 1, 2019 at 4:00pm <br/> <small>Hamilton, ON</small></h3>
     <!-- <Countdown></Countdown> -->
+    <AddToCalendar class="block-centered" mountElem="add-to-calendar-home" />
 
     <section id="address-survey">
       <p>We're very excited to celebrate our wedding with you! Please tell us where to send your invitation:</p>
@@ -21,14 +22,14 @@
     <section id="location">
       <Location></Location>
     </section>
-    
+
     <section id="photos">
       <Photos></Photos>
     </section>
 
 
 
-    <md-dialog 
+    <md-dialog
       :md-active.sync="showAddressSurvey"
       :md-backdrop="true"
       :md-close-on-esc="false"
@@ -46,6 +47,7 @@
 <script>
   // import AddressSurvey from './AddressSurvey'
   import Countdown from '../misc/Countdown'
+  import AddToCalendar from '../misc/AddToCalendar'
   // import Photos from './Photos'
   // import Location from './Location'
   // import OurStory from './OurStory'
@@ -63,6 +65,7 @@
     },
     components: {
       Countdown,
+      AddToCalendar,
       AddressSurvey,
       Photos,
       Location,
@@ -75,6 +78,11 @@
 
 section {
   margin-bottom: 80px;
+}
+.block-centered {
+  margin: auto;
+  display: block;
+  width: 150px
 }
 h3.main-date {
   text-align: center;
