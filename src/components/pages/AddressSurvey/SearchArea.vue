@@ -2,10 +2,10 @@
   <div>
     <md-empty-state 
       md-icon="search" 
-      md-label="Please enter your email or phone number" 
+      md-label="Please search by name, email, or phone number" 
       md-description="You will be able to respond for yourself and all your guests">
       <md-field>
-        <label>Email or Phone Number</label>
+        <label>Name, Email, or Phone Number</label>
         <md-input id="searchInput" v-model="searchInput" @keyup.enter="submitSearch"></md-input>
       </md-field>
       <md-button id="btnSearch" :class="!!searchType && 'md-primary md-raised' " @click="submitSearch" :disabled="isLoading || !searchType">
@@ -20,6 +20,7 @@
 <script>
 const regExpPhone = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
 const regExpEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+const regExpName = /^[a-z,.'-]+ [a-z ,.'-]+$/i
 export default {
   props: ['isLoading'],
   data () {
@@ -33,6 +34,8 @@ export default {
         return 'phone'
       } else if (regExpEmail.test(this.searchInput)) {
         return 'email'
+      } else if (regExpName.test(this.searchInput)) {
+        return 'name'
       } else {
         return ''
       }
@@ -41,12 +44,16 @@ export default {
   methods: {
     submitSearch () {
       if (this.searchType === 'email') {
-        this.$emit('submitSearch', this.searchInput, this.searchType)
+        this.$emit('submitSearch', this.searchInput, 'email')
+        return true
+      } else if (this.searchType === 'name') {
+        this.$emit('submitSearch', this.searchInput, 'name')
         return true
       } else if (this.searchType === 'phone') {
         let matches = regExpPhone.exec(this.searchInput)
         let cleanPhone = matches[1] + matches[2] + matches[3]
-        this.$emit('submitSearch', cleanPhone, this.searchType)
+        this.$emit('submitSearch', cleanPhone, 'phone')
+        return true
       } else {
         return false
       }
