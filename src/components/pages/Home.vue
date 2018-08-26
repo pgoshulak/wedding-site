@@ -70,6 +70,9 @@
       Photos,
       Location,
       OurStory
+    },
+    created () {
+      console.log('/mystery')
     }
   }
 </script>
