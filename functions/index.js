@@ -114,3 +114,29 @@ exports.generateThumbnail = functions.storage.object().onChange((event) => {
     })
   }).then(() => console.log('Thumbnail URLs saved to database.'))
 })
+
+exports.writeFamiliesLog = functions.firestore
+  .document('families/{familyId}')
+  .onWrite((event) => {
+    let familyId = event.params.familyId
+    let eventData = JSON.stringify(event.data.data())
+    let timestamp = new Date().toLocaleString(undefined, {timeZone: 'America/New_York', hour12: false})
+
+    let newData = {}
+    newData[timestamp] = eventData
+
+    return admin.firestore().collection('families-log').doc(familyId).set(newData, { merge: true })
+  })
+
+exports.writeGuestsLog = functions.firestore
+  .document('guests/{guestId}')
+  .onWrite((event) => {
+    let guestId = event.params.guestId
+    let eventData = JSON.stringify(event.data.data())
+    let timestamp = new Date().toLocaleString(undefined, {timeZone: 'America/New_York', hour12: false})
+
+    let newData = {}
+    newData[timestamp] = eventData
+
+    return admin.firestore().collection('guests-log').doc(guestId).set(newData, { merge: true })
+  })

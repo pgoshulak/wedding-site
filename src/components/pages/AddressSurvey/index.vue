@@ -170,13 +170,13 @@
       },
       confirmRejection () {
         for (let guest of this.searchResultsGuests) {
-          this.newGuestChange(guest.id, {rsvp: 'EARLY_REJECT', timestamp: new Date()})
+          this.newGuestChange(guest.id, {rsvp: 'EARLY_REJECT'})
         }
         this.saveChanges('reject')
       },
       confirmInviteRequest () {
         for (let guest of this.searchResultsGuests) {
-          this.newGuestChange(guest.id, {rsvp: 'REQUEST_INVITE', timestamp: new Date()})
+          this.newGuestChange(guest.id, {rsvp: 'REQUEST_INVITE'})
         }
         this.saveChanges('submit')
       }
