@@ -1,6 +1,8 @@
 <template>
   <div>
-    <form action="#" autocomplete="on">
+    <p>{{ infoRequestMessage }}</p>
+    <md-button class="md-raised" v-if="!showAddressForm" @click="showAddressForm = true">Update Address</md-button>
+    <form v-if="showAddressForm" action="#" autocomplete="on">
       <div class="md-layout md-gutter md-alignment-center-left">
 
         <div class="md-layout-item md-size-66 md-small-size-100">
@@ -39,10 +41,13 @@
 </template>
 
 <script>
+  import { obscureAddress } from './obscureData.js'
   export default {
     props: ['familyId', 'resultData', 'lastSaveRequest'],
     data () {
       return {
+        infoRequestMessage: '',
+        showAddressForm: false,
         name: '',
         streetAddress: '',
         city: '',
@@ -52,14 +57,6 @@
       }
     },
     methods: {
-      populateExistingData () {
-        this.name = this.resultData.name || ''
-        this.streetAddress = this.resultData.streetAddress || ''
-        this.city = this.resultData.city || ''
-        this.province = this.resultData.province || ''
-        this.postalCode = this.resultData.postalCode || ''
-        this.country = this.resultData.country || ''
-      },
       newFamilyChange (e) {
         // Emit the changed data as key-value, eg. {'city': 'Toronto'}
         // Important to have the input element's id as the same field used in the db
@@ -68,8 +65,21 @@
         this.$emit('newFamilyChange', changedData)
       }
     },
-    created () {
-      this.populateExistingData()
+    mounted () {
+      // If all address data is present, indicate so (without revealing)
+      if (this.resultData.streetAddress &&
+        this.resultData.city &&
+        this.resultData.province &&
+        this.resultData.postalCode &&
+        this.resultData.country
+      ) {
+        this.infoRequestMessage = `We already have your address
+        as ${obscureAddress(this.resultData.streetAddress)},
+        ${obscureAddress(this.resultData.city)}.`
+        this.showAddressForm = false
+      } else {
+        this.showAddressForm = true
+      }
     }
   }
 </script>

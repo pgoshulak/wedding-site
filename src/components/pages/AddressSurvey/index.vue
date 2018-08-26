@@ -22,7 +22,9 @@
       </md-step>
 
       <md-step id="guests" :md-label="`Guests ${searchResultsGuests ? '(' + searchResultsGuests.length + ')' : ''}`">
-        <p>Your email and phone number are optional. You will have the choice of receiving updates,
+        <p class="info-section">
+          <md-icon>info</md-icon>
+          Your email and phone number are optional. You will have the choice of receiving updates,
           such as receiving directions to the venue via text message on the wedding day</p>
         <GuestData
           v-for="guest in searchResultsGuests"
@@ -221,5 +223,12 @@
 
   .text-muted {
     color: #666;
+  }
+
+  .info-section {
+    border: 1px solid #03A9F4;
+    border-radius: 2px;
+    background-color: #E1F5FE;
+    padding: 6px;
   }
 </style>
