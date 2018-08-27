@@ -72,7 +72,9 @@
       OurStory
     },
     created () {
-      console.log('/mystery')
+      if (!document.cookie.includes('remember')) {
+        console.log('/mystery')
+      }
     }
   }
 </script>

@@ -6,7 +6,18 @@
 
 <script>
   export default {
-    name: '???'
+    name: 'Mystery',
+    created () {
+      if (document.cookie.includes('remember')) {
+        this.$router.push('/')
+      }
+    },
+    mounted () {
+      setTimeout(() => {
+        document.cookie = 'remember=remember'
+        this.$router.push('/')
+      }, 5000)
+    }
   }
 </script>
 

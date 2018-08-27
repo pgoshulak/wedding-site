@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 const Home = () => import('@/components/pages/Home' /* webpackChunkName: "chunk-home" */)
 const Mystery = () => import('@/components/pages/Mystery' /* webpackChunkName: "chunk-mystery" */)
+const NotFound = () => import('@/components/pages/NotFound' /* webpackChunkName: "chunk-not-found" */)
 
 Vue.use(Router)
 
@@ -26,6 +27,12 @@ export default new Router({
       path: '/mystery',
       name: '???',
       component: Mystery
+    }, {
+      path: '/404',
+      component: NotFound
+    }, {
+      path: '*',
+      redirect: '/404'
     }
   ]
 })
