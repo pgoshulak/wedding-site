@@ -1,11 +1,11 @@
 <template>
   <div>
-    <md-empty-state 
-      md-icon="search" 
-      md-label="Please search by name, email, or phone number" 
+    <md-empty-state
+      md-icon="search"
+      md-label="Lookup by full name, email, or phone number"
       md-description="You will be able to respond for yourself and all your guests">
       <md-field>
-        <label>Name, Email, or Phone Number</label>
+        <label>Full Name, Email, or Phone Number</label>
         <md-input id="searchInput" v-model="searchInput" @keyup.enter="submitSearch"></md-input>
       </md-field>
       <md-button id="btnSearch" :class="!!searchType && 'md-primary md-raised' " @click="submitSearch" :disabled="isLoading || !searchType">
@@ -63,4 +63,7 @@ export default {
 </script>
 
 <style scoped>
+.text-muted {
+  color: #666
+}
 </style>

@@ -50,7 +50,7 @@
     </ConfirmReject>
 
     <!-- Snackbar popup for error display -->
-    <md-snackbar :md-duration="4000" :md-active.sync="showErrorSnackbar" md-persistent>
+    <md-snackbar :md-duration="6000" :md-active.sync="showErrorSnackbar" md-persistent>
       {{errorMessage}}
       <md-button class="md-primary" @click="showErrorSnackbar = false">Dismiss</md-button>
     </md-snackbar>
@@ -117,7 +117,7 @@
           .then(snap1 => {
             // No results
             if (snap1.empty) {
-              throw new Error(`Could not find ${searchType} "${searchTerm}"`)
+              throw new Error(`Could not find ${searchType} "${searchTerm}". Please use correct capitalization!`)
             }
             // Retrieve the guest's familyId
             const familyId = snap1.docs[0].data().familyId

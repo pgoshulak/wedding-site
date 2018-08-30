@@ -40,7 +40,15 @@
         // Emit the changed data as key-value, eg. {'email': 'user@email.com'}
         // Important to have the input element's id as the same field used in the db
         let changedData = {}
-        changedData[e.target.id] = e.target.value
+        // Force email to lowercase (weird issue where emails save as 'User@email.com'... smartphone auto-cap?)
+        if (e.target.id === 'email') {
+          changedData[e.target.id] = e.target.value.toLowerCase()
+        } else if (e.target.id === 'phone') {
+          // Strip dashes, dots, whitespace from phone numbers
+          changedData[e.target.id] = e.target.value.replace(/[-.\s()+]/g, '')
+        } else {
+          changedData[e.target.id] = e.target.value
+        }
         this.$emit('newGuestChange', this.guest.id, changedData)
       }
     },

@@ -2,7 +2,7 @@
   <div id="home">
     <h3 class="md-display-2">Our Story</h3>
     <p>
-      Steph and Peter began their fairy-tale love story in September 2014 at the Toronto Rehabilitation Institute - she, a responsible speech therapist on the Brain Injury floor - he, a gangly student volunteer with a weird Batman obsession. They chatted as friends and co-workers every week when Peter volunteered in the “Baking Group” rehab sessions, and Peter impressed Steph with his ability to run an organized kitchen. Clearly, this weirdo could cook.
+      Steph and Peter began their fairy-tale love story in September 2014 at the Toronto Rehabilitation Institute - she, a responsible speech therapist on the Brain Injury floor - he, a gangly student volunteer with a weird Batman obsession. They chatted as friends and co-workers every week when Peter volunteered in the “Baking Group” rehab sessions, and Peter impressed Steph with his ability to run an organized kitchen. "Dang", she thought to herself, "this weirdo can cook".
     </p><p>
       After Peter left TRI and joined the workforce as an adult (lol), they ran into each other on the streets of downtown Toronto every few months. Peter made several moves, including boldly handing over his business card while saying “You should call me”, but Steph was playing cool-girl-who-doesn’t-call-back, and Peter was stumped.
     </p><p>

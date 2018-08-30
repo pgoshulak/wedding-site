@@ -119,11 +119,12 @@ exports.writeFamiliesLog = functions.firestore
   .document('families/{familyId}')
   .onWrite((event) => {
     let familyId = event.params.familyId
-    let eventData = JSON.stringify(event.data.data())
+    let eventData = event.data.data()
     let timestamp = new Date().toLocaleString(undefined, {timeZone: 'America/New_York', hour12: false})
 
     let newData = {}
-    newData[timestamp] = eventData
+    newData[timestamp] = JSON.stringify(eventData)
+    newData.name = eventData.name
 
     return admin.firestore().collection('families-log').doc(familyId).set(newData, { merge: true })
   })
@@ -132,11 +133,12 @@ exports.writeGuestsLog = functions.firestore
   .document('guests/{guestId}')
   .onWrite((event) => {
     let guestId = event.params.guestId
-    let eventData = JSON.stringify(event.data.data())
+    let eventData = event.data.data()
     let timestamp = new Date().toLocaleString(undefined, {timeZone: 'America/New_York', hour12: false})
 
     let newData = {}
-    newData[timestamp] = eventData
+    newData[timestamp] = JSON.stringify(eventData)
+    newData.name = eventData.name
 
     return admin.firestore().collection('guests-log').doc(guestId).set(newData, { merge: true })
   })
