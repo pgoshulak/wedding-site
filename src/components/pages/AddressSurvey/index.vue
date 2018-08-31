@@ -153,6 +153,7 @@
             this.completedType = 'reject'
             this.showRsvpRejectDialog = false
           }
+          this.$emit('addressSubmitted')
         }).catch(err => {
           console.error('Error committing batch:', err)
           this.errorMessage = `Error: ${err.message}`

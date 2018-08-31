@@ -6,11 +6,11 @@
     <AddToCalendar class="block-centered" mountElem="add-to-calendar-home" />
 
     <section id="address-survey">
-      <p>We're very excited to celebrate our wedding with you! Please tell us where to send your invitation:</p>
-      <div id="address-survey-button-container">
-        <md-button id="address-survey-button" class="md-primary md-raised" @click="showAddressSurvey=true">
+      <p>We're very excited to celebrate our wedding with you! {{ submitAddressButton.message }}</p>
+      <div class="address-survey-button-container">
+        <md-button class="address-survey-button md-primary md-raised" @click="showAddressSurvey=true">
           <md-icon>mail</md-icon>
-          Submit Address
+          &nbsp; {{ submitAddressButton.buttonText }}
         </md-button>
       </div>
     </section>
@@ -27,6 +27,16 @@
       <Photos></Photos>
     </section>
 
+    <section id="address-survey-2" v-if="submitAddressButton.submitted === false">
+      <h3 class="md-display-2">Send my invite!</h3>
+      <p>Excited? So are we! Please make sure we can send your invitation to the correct address:</p>
+      <div class="address-survey-button-container">
+        <md-button class="address-survey-button md-primary md-raised" @click="showAddressSurvey=true">
+          <md-icon>mail</md-icon>
+          &nbsp; Submit address
+        </md-button>
+      </div>
+    </section>
 
 
     <md-dialog
@@ -37,7 +47,7 @@
       :md-fullscreen="true"
       >
       <md-dialog-content>
-        <AddressSurvey @closeAddressSurvey="showAddressSurvey=false"></AddressSurvey>
+        <AddressSurvey @closeAddressSurvey="showAddressSurvey=false" @addressSubmitted="setAddressSubmittedcookie"></AddressSurvey>
       </md-dialog-content>
     </md-dialog>
 
@@ -45,12 +55,8 @@
 </template>
 
 <script>
-  // import AddressSurvey from './AddressSurvey'
   import Countdown from '../misc/Countdown'
   import AddToCalendar from '../misc/AddToCalendar'
-  // import Photos from './Photos'
-  // import Location from './Location'
-  // import OurStory from './OurStory'
   const OurStory = () => import('@/components/pages/OurStory' /* webpackChunkName: "chunk-our-story" */)
   const Location = () => import('@/components/pages/Location' /* webpackChunkName: "chunk-location" */)
   const AddressSurvey = () => import('@/components/pages/AddressSurvey' /* webpackChunkName: "chunk-address-survey" */)
@@ -60,7 +66,30 @@
     name: 'Home',
     data () {
       return {
-        showAddressSurvey: false
+        showAddressSurvey: false,
+        submitAddressButton: {
+          submitted: false,
+          buttonText: 'Send my invite!',
+          message: 'Please tell us where to send your invitation:'
+        }
+      }
+    },
+    methods: {
+      setAddressSubmittedMessages () {
+        this.submitAddressButton = {
+          submitted: true,
+          buttonText: 'Update address',
+          message: 'Thank you for submitting your address!'
+        }
+      },
+      setAddressSubmittedcookie () {
+        document.cookie = 'address_submitted=1'
+        this.setAddressSubmittedMessages()
+      }
+    },
+    mounted () {
+      if (document.cookie.includes('address_submitted')) {
+        this.setAddressSubmittedMessages()
       }
     },
     components: {
@@ -111,12 +140,13 @@ h3.md-display-2 {
     line-height: 80px;
   }
 }
-#address-survey-button-container {
+.address-survey-button-container {
   width: 100%;
   text-align: center;
   & > button {
     max-width: 300px;
     width: 300px;
+    height: 80px;
   }
 }
 
