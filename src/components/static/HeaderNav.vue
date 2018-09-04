@@ -3,7 +3,7 @@
     <header-nav-tabs id="header-nav-tabs" :links="links"></header-nav-tabs>
     <!-- <header-nav-drawer id="header-nav-drawer" :links="links"></header-nav-drawer> -->
     <header-nav-menu id="header-nav-menu" :links="links"></header-nav-menu>
-    
+
   </div>
 </template>
 
@@ -46,6 +46,10 @@ export default {
 </script>
 
 <style lang="scss">
+
+#header-nav {
+  z-index: 12;
+}
 
 $small-breakpoint: 960px;
 
