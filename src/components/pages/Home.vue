@@ -45,6 +45,7 @@
       :md-close-on-esc="false"
       :md-click-outside-to-close="false"
       :md-fullscreen="true"
+      class="searchDialog"
       >
       <md-dialog-content>
         <AddressSurvey @closeAddressSurvey="showAddressSurvey=false" @addressSubmitted="setAddressSubmittedcookie"></AddressSurvey>
@@ -149,5 +150,7 @@ h3.md-display-2 {
     height: 80px;
   }
 }
-
+.searchDialog {
+  z-index: 13;
+}
 </style>

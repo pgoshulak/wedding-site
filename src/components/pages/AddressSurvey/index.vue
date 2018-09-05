@@ -100,6 +100,7 @@
         isLoading: false,
         guestsRef: null,
         familiesRef: null,
+        errorsRef: null,
         batchUpdates: null,
         completedType: ''
       }
@@ -117,6 +118,7 @@
           .then(snap1 => {
             // No results
             if (snap1.empty) {
+              this.logSearchError(searchType, searchTerm)
               throw new Error(`Could not find ${searchType} "${searchTerm}". Please use correct capitalization!`)
             }
             // Retrieve the guest's familyId
@@ -180,11 +182,45 @@
           this.newGuestChange(guest.id, {rsvp: 'REQUEST_INVITE'})
         }
         this.saveChanges('submit')
+      },
+      logSearchError (searchType, searchTerm) {
+        let timestamp = this.formattedDate() + 'T' + this.formattedTime()
+        this.errorsRef.doc(timestamp).set({
+          type: searchType,
+          searchTerm: searchTerm
+        }).catch(err => {
+          console.error(err)
+        })
+      },
+      formattedDate () {
+        let d = new Date()
+        let month = '' + (d.getMonth() + 1)
+        let day = '' + d.getDate()
+        let year = d.getFullYear()
+
+        if (month.length < 2) month = '0' + month
+        if (day.length < 2) day = '0' + day
+
+        return [year, month, day].join('-')
+      },
+      formattedTime () {
+        let d = new Date()
+        let hour = '' + d.getHours()
+        let min = '' + d.getMinutes()
+        let sec = d.getSeconds()
+        let mil = d.getMilliseconds()
+
+        if (hour.length < 2) hour = '0' + hour
+        if (min.length < 2) min = '0' + min
+        if (sec.length < 2) sec = '0' + sec
+
+        return [[hour, min, sec].join(':'), mil].join('.')
       }
     },
     created () {
       this.guestsRef = db.collection('guests')
       this.familiesRef = db.collection('families')
+      this.errorsRef = db.collection('errors')
       this.batchUpdates = db.batch()
     },
     components: {
