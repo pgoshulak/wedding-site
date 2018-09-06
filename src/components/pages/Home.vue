@@ -153,4 +153,7 @@ h3.md-display-2 {
 .searchDialog {
   z-index: 13;
 }
+.md-overlay {
+  z-index: 6
+}
 </style>

@@ -8,6 +8,9 @@
         <label>Full Name, Email, or Phone Number</label>
         <md-input id="searchInput" v-model="searchInput" @keyup.enter="submitSearch"></md-input>
       </md-field>
+      <span class="error-helper" v-if="searchErrors.length >= 3">
+        Looks like Peter screwed up. <a :href="errorEmailTemplate">Email</a> or <a href="tel:6477633377">text</a> him and complain!.
+      </span>
       <md-button id="btnSearch" :class="!!searchType && 'md-primary md-raised' " @click="submitSearch" :disabled="isLoading || !searchType">
         <md-progress-spinner v-if="isLoading" :md-diameter="12" :md-stroke="2" md-mode="indeterminate"></md-progress-spinner>
         Search {{searchType}}!
@@ -22,7 +25,7 @@ const regExpPhone = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
 const regExpEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 const regExpName = /^[a-z,.'-]+ [a-z ,.'-]+$/i
 export default {
-  props: ['isLoading'],
+  props: ['isLoading', 'searchErrors'],
   data () {
     return {
       searchInput: ''
@@ -39,6 +42,11 @@ export default {
       } else {
         return ''
       }
+    },
+    errorEmailTemplate () {
+      return `mailto:pgoshulak+wedding@gmail.com
+        ?subject=Your search sucks
+        &body=Hey noob, I tried searching for "${this.searchErrors.join('" and "')}", but nothing worked! Can you help?`
     }
   },
   methods: {

@@ -1,6 +1,6 @@
 <template>
   <div id="address-survey">
-    <SearchArea v-if="searchResultsGuests.length==0" @submitSearch="submitSearch" :isLoading="isLoading">
+    <SearchArea v-if="searchResultsGuests.length==0" @submitSearch="submitSearch" :isLoading="isLoading" :searchErrors="searchErrors">
       <md-button @click="$emit('closeAddressSurvey')">Back</md-button>
     </SearchArea>
 
@@ -89,7 +89,6 @@
     data () {
       return {
         titleText: 'Address Survey',
-        searchTerm: '',
         foundFamilyId: '',
         searchResultsFamily: sampleData ? sampleData.searchResultsFamily : {},
         searchResultsGuests: sampleData ? sampleData.searchResultsGuests : [],
@@ -102,24 +101,39 @@
         familiesRef: null,
         errorsRef: null,
         batchUpdates: null,
-        completedType: ''
+        completedType: '',
+        searchErrors: []
       }
     },
     methods: {
       submitSearch (searchTerm, searchType) {
         this.isLoading = true
-        this.searchTerm = searchTerm
         // Clear existing search results
         this.searchResultsFamily = {}
         this.searchResultsGuests = []
 
+        // Format the search term for firebase's pickiness :(
+        let searchTermSubmitted = ''
+        if (searchType === 'phone') {
+          searchTermSubmitted = searchTerm
+        } else if (searchType === 'email') {
+          searchTermSubmitted = searchTerm.toLowerCase()
+        } else {
+          searchTermSubmitted = searchTerm.trim()
+        }
+
         // Fetch the single guest matching the email address
-        this.guestsRef.where(searchType, '==', searchTerm).get()
+        this.guestsRef.where(searchType, '==', searchTermSubmitted).get()
           .then(snap1 => {
             // No results
             if (snap1.empty) {
-              this.logSearchError(searchType, searchTerm)
-              throw new Error(`Could not find ${searchType} "${searchTerm}". Please use correct capitalization!`)
+              this.searchErrors.push(searchTerm)
+              this.logSearchError(searchType, searchTerm, searchTermSubmitted)
+              let errorMessage = `Could not find ${searchType} "${searchTerm}". `
+              if (searchType === 'name') {
+                errorMessage += 'Please use correct capitalization!'
+              }
+              throw new Error(errorMessage)
             }
             // Retrieve the guest's familyId
             const familyId = snap1.docs[0].data().familyId
@@ -183,11 +197,12 @@
         }
         this.saveChanges('submit')
       },
-      logSearchError (searchType, searchTerm) {
+      logSearchError (searchType, searchTerm, searchTermSubmitted) {
         let timestamp = this.formattedDate() + 'T' + this.formattedTime()
         this.errorsRef.doc(timestamp).set({
           type: searchType,
-          searchTerm: searchTerm
+          userSearch: searchTerm,
+          formatted: searchTermSubmitted
         }).catch(err => {
           console.error(err)
         })

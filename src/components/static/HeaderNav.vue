@@ -48,7 +48,7 @@ export default {
 <style lang="scss">
 
 #header-nav {
-  z-index: 12;
+  z-index: 6;
 }
 
 $small-breakpoint: 960px;
