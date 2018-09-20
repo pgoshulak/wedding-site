@@ -4,9 +4,10 @@
       md-icon="search"
       md-label="Lookup by full name, email, or phone number"
       md-description="You will be able to respond for yourself and all your guests">
-      <md-field>
+      <md-field :md-counter="false">
         <label>Full Name, Email, or Phone Number</label>
-        <md-input id="searchInput" v-model="searchInput" @keyup.enter="submitSearch"></md-input>
+        <span class="md-prefix" v-if="searchLooksLikePhone">+1</span>
+        <md-input id="searchInput" v-model="searchInput" @keyup.enter="submitSearch" maxlength="30"></md-input>
       </md-field>
       <span class="error-helper" v-if="searchErrors.length >= 3">
         Looks like Peter screwed up. <a :href="errorEmailTemplate">Email</a> or <a href="tel:6477633377">text</a> him and complain!.
@@ -21,6 +22,7 @@
 </template>
 
 <script>
+const regExpPhoneStart = /^[\(\d]/
 const regExpPhone = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
 const regExpEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 const regExpName = /^[a-z,.'-]+ [a-z ,.'-]+$/i
@@ -47,6 +49,9 @@ export default {
       return `mailto:pgoshulak+wedding@gmail.com
         ?subject=Your search sucks
         &body=Hey noob, I tried searching for "${this.searchErrors.join('" and "')}", but nothing worked! Can you help?`
+    },
+    searchLooksLikePhone () {
+      return regExpPhoneStart.test(this.searchInput)
     }
   },
   methods: {
