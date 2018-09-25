@@ -1,6 +1,6 @@
 <template>
   <div id="address-survey">
-    <SearchArea v-if="searchResultsGuests.length==0" @submitSearch="submitSearch" :isLoading="isLoading" :searchErrors="searchErrors">
+    <SearchArea v-if="searchResultsGuests.length==0" @submitSearch="submitSearch" :isLoading="isLoading" :searchErrors="searchErrors" :simpleGuestDbSearch="simpleGuestDbSearch">
       <md-button @click="$emit('closeAddressSurvey')">Back</md-button>
     </SearchArea>
 
@@ -81,6 +81,7 @@
   import GuestData from './GuestData'
   import ConfirmSubmit from './ConfirmSubmit'
   import ConfirmReject from './ConfirmReject'
+  import Fuse from 'fuse.js'
 
   // import sampleData from './sample-data.json'
   let sampleData = null
@@ -102,7 +103,8 @@
         errorsRef: null,
         batchUpdates: null,
         completedType: '',
-        searchErrors: []
+        searchErrors: [],
+        simpleGuestDbSearch: null
       }
     },
     methods: {
@@ -130,9 +132,7 @@
               this.searchErrors.push(searchTerm)
               this.logSearchError(searchType, searchTerm, searchTermSubmitted)
               let errorMessage = `Could not find ${searchType} "${searchTerm}". `
-              if (searchType === 'name') {
-                errorMessage += 'Please use correct capitalization!'
-              }
+
               throw new Error(errorMessage)
             }
             // Retrieve the guest's familyId
@@ -230,6 +230,14 @@
         if (sec.length < 2) sec = '0' + sec
 
         return [[hour, min, sec].join(':'), mil].join('.')
+      },
+      populateSimpleGuestDb () {
+        db.collection('guest-names-ids').doc('guests').get().then(doc => {
+          this.simpleGuestDbSearch = new Fuse(JSON.parse(doc.data().all), {
+            keys: ['name'],
+            includeScore: true
+          })
+        })
       }
     },
     created () {
@@ -237,6 +245,7 @@
       this.familiesRef = db.collection('families')
       this.errorsRef = db.collection('errors')
       this.batchUpdates = db.batch()
+      this.populateSimpleGuestDb()
     },
     components: {
       SearchArea,
