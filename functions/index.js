@@ -142,3 +142,31 @@ exports.writeGuestsLog = functions.firestore
 
     return admin.firestore().collection('guests-log').doc(guestId).set(newData, { merge: true })
   })
+
+exports.serializeGuestIds = functions.firestore
+  .document('guests/{guestId}')
+  .onCreate(event => {
+    let newestGuestId = event.params.guestId || 'none'
+    // Get all guest data (id and name only)
+    admin.firestore().collection('guests').get().then(snap => {
+      let guestNamesAndIds = []
+      snap.docs.forEach(doc => {
+        let id = doc.id
+        let name = doc.get('name')
+        guestNamesAndIds.push({
+          id,
+          name
+        })
+      })
+      admin.firestore().collection('guest-names-ids').doc('guests').set({
+        all: JSON.stringify(guestNamesAndIds),
+        newest: newestGuestId,
+        updated: new Date()
+      })
+    })
+    return true
+  })
+
+exports.test = () => {
+  console.log('hello from test')
+}
