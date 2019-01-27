@@ -1,25 +1,16 @@
 <template>
   <div class="guest-data">
     <span class="md-title">{{guest.name}}</span>
-    <p>{{ infoRequestMessage }}</p>
-    <md-button class="md-raised" v-if="!showEmailPhoneForm" @click="showEmailPhoneForm= true">Update Contact Info</md-button>
-
-    <div v-if="showEmailPhoneForm" class="md-layout md-gutter md-alignment-center-left">
-      <div class="md-layout-item md-size-60 md-small-size-100 md-xsmall-size-100">
-        <md-field :md-counter="false">
-          <label for="email">Email <small>(Optional)</small></label>
-          <md-input id="email" v-model="guestEmail" @change="newGuestChange"></md-input>
-        </md-field>
-      </div>
-
-      <div class="md-layout-item md-size-40 md-small-size-100 md-xsmall-size-100">
-        <md-field :md-counter="false">
-          <label for="phone">Phone <small>(Optional)</small></label>
-          <span class="md-prefix">+1</span>
-          <md-input id="phone" type="tel" v-model="guestPhone" @change="newGuestChange" maxlength="10"></md-input>
-        </md-field>
-      </div>
-    </div>
+    <md-radio id="rsvp-accept" v-model="guestRSVP" value="ACCEPT" @change="setRsvp" class="md-primary">Attending</md-radio>
+    <md-radio id="rsvp-reject" v-model="guestRSVP" value="REJECT" @change="setRsvp" class="md-primary">Not attending</md-radio>
+    <md-field v-if="guestRSVP === 'ACCEPT'" :md-counter="false">
+      <label for="song">Song request <small>(Optional)</small></label>
+      <md-input id="song" v-model="guestSong" @change="newGuestChange" maxlength="64"></md-input>
+    </md-field>
+    <md-field v-if="guestRSVP === 'ACCEPT'" :md-counter="false">
+      <label for="comment">Comment <small>(Optional)</small></label>
+      <md-input id="comment" v-model="guestComment" @change="newGuestChange" maxlength="64"></md-input>
+    </md-field>
 
   </div>
 </template>
@@ -33,7 +24,10 @@
         infoRequestMessage: '',
         showEmailPhoneForm: false,
         guestEmail: '',
-        guestPhone: ''
+        guestPhone: '',
+        guestRSVP: this.guest.rsvp || '',
+        guestSong: this.guest.song || '',
+        guestComment: this.guest.comment || ''
       }
     },
     methods: {
@@ -51,10 +45,16 @@
           changedData[e.target.id] = e.target.value
         }
         this.$emit('newGuestChange', this.guest.id, changedData)
+      },
+      setRsvp (val) {
+        this.$emit('newGuestChange', this.guest.id, {rsvp: val})
       }
     },
     mounted () {
       // If all data is present, indicate so (without revealing)
+      if (this.guest.rsvp === 'ACCEPT' || this.guest.rsvp === 'REJECT') {
+        this.guestRSVP = this.guest.rsvp
+      }
       if (this.guest.email && this.guest.phone) {
         this.infoRequestMessage = `We already have your email (${obscureEmail(this.guest.email)})
         and phone number (${obscurePhone(this.guest.phone)})`
@@ -69,5 +69,8 @@
 <style scoped>
   .guest-data {
     margin-bottom: 20px;
+  }
+  .md-radio {
+    display: flex;
   }
 </style>

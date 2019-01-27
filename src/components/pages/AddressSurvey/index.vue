@@ -4,47 +4,27 @@
       <md-button @click="$emit('closeAddressSurvey')">Back</md-button>
     </SearchArea>
 
-    <md-steppers v-else-if="completedType===''" md-vertical :md-active-step.sync="activeStep">
+    <div v-else-if="completedType===''">
+      <p>Hello, <strong>{{searchResultsFamily.name || "no name"}}</strong>!</p>
+      <GuestData
+        v-for="guest in searchResultsGuests"
+        :key="guest.id"
+        :guest="guest"
+        @newGuestChange="newGuestChange"
+        />
+      <md-button class="md-primary md-raised" @click="confirmRSVPSubmit" :disabled="isLoading || !allRSVPsValid">
+        <md-progress-spinner id="submit-spinner" v-if="isLoading" :md-diameter="12" :md-stroke="2" md-mode="indeterminate"></md-progress-spinner>
+        Confirm!
+      </md-button>
+      <md-button @click="$emit('closeAddressSurvey')">Cancel</md-button>
+    </div>
 
-      <md-step id="family" md-label="Address">
-        <p>
-          Hello, <strong>{{searchResultsFamily.name || "no name"}}</strong>!
-          Where should your invitation be sent?
-          <br/>
-          <small class="text-muted">(Can't attend? <a @click="showRsvpRejectDialog=true">Click here</a>)</small>
-        </p>
-        <FamilyData
-          :familyId="foundFamilyId"
-          :resultData="searchResultsFamily"
-          @newFamilyChange="newFamilyChange"
-          />
-        <md-button class="md-primary md-raised" @click="activeStep = 'guests'">Next</md-button>
-      </md-step>
-
-      <md-step id="guests" :md-label="`Guests ${searchResultsGuests ? '(' + searchResultsGuests.length + ')' : ''}`">
-        <p class="info-section">
-          <md-icon>info</md-icon>
-          Your email and phone number are optional. You will have the choice of receiving updates,
-          such as receiving directions to the venue via text message on the wedding day</p>
-        <GuestData
-          v-for="guest in searchResultsGuests"
-          :key="guest.id"
-          :guest="guest"
-          @newGuestChange="newGuestChange"
-          />
-        <md-button class="md-primary md-raised" @click="confirmInviteRequest" :disabled="isLoading">
-          <md-progress-spinner id="submit-spinner" v-if="isLoading" :md-diameter="12" :md-stroke="2" md-mode="indeterminate"></md-progress-spinner>
-          Send my invite!
-        </md-button>
-        <md-button @click="activeStep = 'family'">Back</md-button>
-      </md-step>
-
-    </md-steppers>
-
+    <!-- RSVP Accepted view -->
     <ConfirmSubmit v-else-if="completedType==='submit'">
       <md-button @click="$emit('closeAddressSurvey')">Back</md-button>
     </ConfirmSubmit>
 
+    <!-- RSVP Rejected view -->
     <ConfirmReject v-else-if="completedType==='reject'">
       <md-button @click="$emit('closeAddressSurvey')">Back</md-button>
     </ConfirmReject>
@@ -54,22 +34,6 @@
       {{errorMessage}}
       <md-button class="md-primary" @click="showErrorSnackbar = false">Dismiss</md-button>
     </md-snackbar>
-
-    <!-- Dialog for early RSVP "reject" -->
-    <md-dialog :md-active.sync="showRsvpRejectDialog">
-      <md-dialog-title>Send RSVP "no"?</md-dialog-title>
-      <md-dialog-content>
-        Are you sure you cannot attend Steph and Peter's wedding on June 1 2019?
-        By clicking <kbd class="reject-outline">RSVP&nbsp;"NO"</kbd>, you will not receive an invitation.
-      </md-dialog-content>
-      <md-dialog-actions>
-        <md-button id="reject-warning" class="md-raised" @click="confirmRejection">
-          <md-progress-spinner id="submit-spinner" v-if="isLoading" :md-diameter="12" :md-stroke="2" md-mode="indeterminate"></md-progress-spinner>
-          RSVP "no"
-        </md-button>
-        <md-button class="md-raised" @click="showRsvpRejectDialog = false">cancel, send my invite</md-button>
-      </md-dialog-actions>
-    </md-dialog>
 
   </div>
 </template>
@@ -93,6 +57,7 @@
         foundFamilyId: '',
         searchResultsFamily: sampleData ? sampleData.searchResultsFamily : {},
         searchResultsGuests: sampleData ? sampleData.searchResultsGuests : [],
+        newRSVPs: {},
         activeStep: 'family',
         showErrorSnackbar: false,
         showRsvpRejectDialog: false,
@@ -105,6 +70,33 @@
         completedType: '',
         searchErrors: [],
         simpleGuestDbSearch: null
+      }
+    },
+    computed: {
+      // Sum the number of "accept" and "reject" RSVPs
+      validRSVPs () {
+        let validRSVPs = {}
+        // Get pre-existing RSVPs
+        this.searchResultsGuests.forEach(guest => {
+          if (guest.rsvp === 'ACCEPT' || guest.rsvp === 'REJECT') {
+            validRSVPs[guest.id] = guest.rsvp
+          }
+        })
+        // Merge with new RSVPs
+        validRSVPs = Object.assign({}, validRSVPs, this.newRSVPs)
+        return validRSVPs
+      },
+      // Check if all guests have a valid RSVP
+      allRSVPsValid () {
+        let numValidRSVPs = Object.keys(this.validRSVPs).length
+        return numValidRSVPs === this.searchResultsGuests.length
+      },
+      allRSVPsReject () {
+        let allReject = true
+        Object.values(this.validRSVPs).forEach(rsvpValue => {
+          if (rsvpValue !== 'REJECT') allReject = false
+        })
+        return allReject
       }
     },
     methods: {
@@ -180,22 +172,18 @@
       newGuestChange (guestId, data) {
         let thisGuestRef = this.guestsRef.doc(guestId)
         this.batchUpdates.set(thisGuestRef, data, {merge: true})
+        // Tabulate the new RSVP for validations
+        if (data.rsvp) {
+          this.$set(this.newRSVPs, guestId, data.rsvp)
+        }
       },
       newFamilyChange (data) {
         let thisFamilyRef = this.familiesRef.doc(this.foundFamilyId)
         this.batchUpdates.set(thisFamilyRef, data, {merge: true})
       },
-      confirmRejection () {
-        for (let guest of this.searchResultsGuests) {
-          this.newGuestChange(guest.id, {rsvp: 'EARLY_REJECT'})
-        }
-        this.saveChanges('reject')
-      },
-      confirmInviteRequest () {
-        for (let guest of this.searchResultsGuests) {
-          this.newGuestChange(guest.id, {rsvp: 'REQUEST_INVITE'})
-        }
-        this.saveChanges('submit')
+      confirmRSVPSubmit () {
+        let type = this.allRSVPsReject ? 'reject' : 'submit'
+        this.saveChanges(type)
       },
       logSearchError (searchType, searchTerm, searchTermSubmitted) {
         let timestamp = this.formattedDate() + 'T' + this.formattedTime()

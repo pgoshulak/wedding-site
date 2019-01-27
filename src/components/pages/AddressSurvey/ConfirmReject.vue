@@ -1,9 +1,9 @@
 <template>
   <div>
     <md-empty-state
-      md-icon="sentiment_very_dissatisfied"
+      md-icon="favorite_border"
       md-label="Thank you for your response"
-      md-description="We're sorry to hear you cannot attend">
+      md-description="We'll miss you on June 1st!">
     </md-empty-state>
     <slot/>
   </div>
