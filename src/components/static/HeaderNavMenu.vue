@@ -6,9 +6,14 @@
       </md-button>
 
       <md-menu-content>
-        <md-menu-item v-for="link in links" :key="link.id" :to="link.to" @click="toggleMenu=false">
-          <span class="md-list-item-text">{{link.label}}</span>
-        </md-menu-item>
+        <div v-for="link in links" :key="link.id">
+          <md-menu-item v-if="link.to" :to="link.to" @click="toggleMenu=false">
+            <span class="md-list-item-text">{{link.label}}</span>
+          </md-menu-item>
+          <md-menu-item v-else-if="link.emit" @click="clickLink(link)">
+            <span class="md-list-item-text">{{link.label}}</span>
+          </md-menu-item>
+        </div>
       </md-menu-content>
 
     </md-menu>
@@ -23,7 +28,13 @@
         toggleMenu: false
       }
     },
-    props: ['links']
+    props: ['links'],
+    methods: {
+      clickLink (link) {
+        this.toggleMenu = false
+        this.$emit(link.emit)
+      }
+    }
   }
 </script>
 

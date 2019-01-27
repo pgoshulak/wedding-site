@@ -1,8 +1,8 @@
 <template>
   <div id="header-nav">
-    <header-nav-tabs id="header-nav-tabs" :links="links"></header-nav-tabs>
+    <header-nav-tabs id="header-nav-tabs" :links="links" @showRegistry="$emit('showRegistry')"></header-nav-tabs>
     <!-- <header-nav-drawer id="header-nav-drawer" :links="links"></header-nav-drawer> -->
-    <header-nav-menu id="header-nav-menu" :links="links"></header-nav-menu>
+    <header-nav-menu id="header-nav-menu" :links="links" @showRegistry="$emit('showRegistry')"></header-nav-menu>
 
   </div>
 </template>
@@ -17,7 +17,7 @@ export default {
       links: [
         {
           id: 'home-link',
-          label: 'Save the Date',
+          label: 'RSVP',
           to: '/'
         },
         {
@@ -34,6 +34,11 @@ export default {
           id: 'photos-link',
           label: 'Photos',
           to: '/#photos'
+        },
+        {
+          id: 'registry-link',
+          label: 'Registry',
+          emit: 'showRegistry'
         }
       ]
     }

@@ -6,12 +6,22 @@
       <md-tab id="tab-location" md-label="Location" to="location"></md-tab>
       <md-tab id="tab-accommodations" md-label="Accommodations" to="accommodations"></md-tab>
       <md-tab id="tab-rsvp" md-label="RSVP" to="rsvp"></md-tab> -->
-      <md-tab v-for="link in links"
-        :key="link.id"
-        :id="link.id"
-        :md-label="link.label"
-        :to="link.to"></md-tab>
-    </md-tabs>
+      <div v-for="link in links" :key="link.id">
+
+        <md-tab
+          v-if="link.to"
+          :id="link.id"
+          :md-label="link.label"
+          :to="link.to"
+        ></md-tab>
+        <md-tab
+          v-else-if="link.emit"
+          :id="link.id"
+          :md-label="link.label"
+          @click="$emit(link.emit)"
+        ></md-tab>
+      </div>
+      </md-tabs>
   </div>
 </template>
 

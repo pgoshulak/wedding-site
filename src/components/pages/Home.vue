@@ -1,16 +1,16 @@
 <template>
   <div id="home">
-    <h3 class="md-display-2">Save the Date</h3>
+    <h3 class="md-display-2">RSVP</h3>
     <h3 class="md-title main-date">Saturday June 1, 2019 at 4:00pm <br/> <small>Hamilton, ON</small></h3>
     <!-- <Countdown></Countdown> -->
     <AddToCalendar class="block-centered" mountElem="add-to-calendar-home" />
 
     <section id="address-survey">
-      <p>We're very excited to celebrate our wedding with you! {{ submitAddressButton.message }}</p>
+      <p>We're very excited to celebrate our wedding with you! {{ submitRSVPButton.message }}</p>
       <div class="address-survey-button-container">
         <md-button class="address-survey-button md-primary md-raised" @click="showAddressSurvey=true">
           <md-icon>mail</md-icon>
-          &nbsp; {{ submitAddressButton.buttonText }}
+          &nbsp; {{ submitRSVPButton.buttonText }}
         </md-button>
       </div>
     </section>
@@ -23,11 +23,15 @@
       <Location></Location>
     </section>
 
+    <!-- <section id="registry">
+      <Registry></Registry>
+    </section> -->
+
     <section id="photos">
       <Photos></Photos>
     </section>
 
-    <section id="address-survey-2" v-if="submitAddressButton.submitted === false">
+    <section id="address-survey-2" v-if="submitRSVPButton.submitted === false">
       <h3 class="md-display-2">Send my invite!</h3>
       <p>Excited? So are we! Please make sure we can send your invitation to the correct address:</p>
       <div class="address-survey-button-container">
@@ -52,6 +56,8 @@
       </md-dialog-content>
     </md-dialog>
 
+
+
   </div>
 </template>
 
@@ -60,6 +66,7 @@
   import AddToCalendar from '../misc/AddToCalendar'
   const OurStory = () => import('@/components/pages/OurStory' /* webpackChunkName: "chunk-our-story" */)
   const Location = () => import('@/components/pages/Location' /* webpackChunkName: "chunk-location" */)
+  const Registry = () => import('@/components/pages/Registry' /* webpackChunkName: "chunk-registry" */)
   const AddressSurvey = () => import('@/components/pages/AddressSurvey' /* webpackChunkName: "chunk-address-survey" */)
   const Photos = () => import('@/components/pages/Photos' /* webpackChunkName: "chunk-photos" */)
 
@@ -68,29 +75,29 @@
     data () {
       return {
         showAddressSurvey: false,
-        submitAddressButton: {
+        submitRSVPButton: {
           submitted: false,
-          buttonText: 'Send my invite!',
-          message: 'Please tell us where to send your invitation:'
+          buttonText: 'RSVP',
+          message: 'Please click here to submit your RSVP online:'
         }
       }
     },
     methods: {
-      setAddressSubmittedMessages () {
-        this.submitAddressButton = {
+      setRSVPSubmittedMessages () {
+        this.submitRSVPButton = {
           submitted: true,
-          buttonText: 'Update address',
-          message: 'Thank you for submitting your address!'
+          buttonText: 'Update RSVP',
+          message: 'Thank you for submitting your RSVP!'
         }
       },
       setAddressSubmittedcookie () {
-        document.cookie = 'address_submitted=1'
-        this.setAddressSubmittedMessages()
+        document.cookie = 'rsvp_submitted=1'
+        this.setRSVPSubmittedMessages()
       }
     },
     mounted () {
-      if (document.cookie.includes('address_submitted')) {
-        this.setAddressSubmittedMessages()
+      if (document.cookie.includes('rsvp_submitted')) {
+        this.setRSVPSubmittedMessages()
       }
     },
     components: {
@@ -99,6 +106,7 @@
       AddressSurvey,
       Photos,
       Location,
+      Registry,
       OurStory
     },
     created () {
