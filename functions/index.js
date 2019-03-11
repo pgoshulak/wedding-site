@@ -18,9 +18,12 @@
 const functions = require('firebase-functions')
 const mkdirp = require('mkdirp-promise')
 // Include a Service Account Key to use a Signed URL
-const gcs = require('@google-cloud/storage')({keyFilename: 'service-account-credentials.json'})
+const gcs = require('@google-cloud/storage')({
+  keyFilename: 'service-account-credentials.json'
+})
 const admin = require('firebase-admin')
-admin.initializeApp(functions.config().firebase)
+// admin.initializeApp(functions.config().firebase)
+admin.initializeApp()
 const spawn = require('child-process-promise').spawn
 const path = require('path')
 const os = require('os')
@@ -38,13 +41,19 @@ const THUMB_PREFIX = 'thumb_'
  * After the thumbnail has been generated and uploaded to Cloud Storage,
  * we write the public URL to the Firebase Realtime Database.
  */
-exports.generateThumbnail = functions.storage.object().onChange((event) => {
+// 'Generate thumbnail' cloud function commented so it does not have to be updated
+// with `firebase-functions` package upgrade v0.8->2.2 (breaking changes), for sake
+// of updating other functions quickly
+/*
+ exports.generateThumbnail = functions.storage.object().onChange(event => {
   // File and directory paths.
   const filePath = event.data.name
   const contentType = event.data.contentType // This is the image Mimme type
   const fileDir = path.dirname(filePath)
   const fileName = path.basename(filePath)
-  const thumbFilePath = path.normalize(path.join(fileDir, `${THUMB_PREFIX}${fileName}`))
+  const thumbFilePath = path.normalize(
+    path.join(fileDir, `${THUMB_PREFIX}${fileName}`)
+  )
   const tempLocalFile = path.join(os.tmpdir(), filePath)
   const tempLocalDir = path.dirname(tempLocalFile)
   const tempLocalThumbFile = path.join(os.tmpdir(), thumbFilePath)
@@ -71,99 +80,143 @@ exports.generateThumbnail = functions.storage.object().onChange((event) => {
   const bucket = gcs.bucket(event.data.bucket)
   const file = bucket.file(filePath)
   const thumbFile = bucket.file(thumbFilePath)
-  const metadata = {contentType: contentType}
+  const metadata = { contentType: contentType }
 
   // Create the temp directory where the storage file will be downloaded.
-  return mkdirp(tempLocalDir).then(() => {
-    // Download file from bucket.
-    return file.download({destination: tempLocalFile})
-  }).then(() => {
-    console.log('The file has been downloaded to', tempLocalFile)
-    // Generate a thumbnail using ImageMagick.
-    return spawn('convert', [tempLocalFile, '-thumbnail', `${THUMB_MAX_WIDTH}x${THUMB_MAX_HEIGHT}>`, tempLocalThumbFile], {capture: ['stdout', 'stderr']})
-  }).then(() => {
-    console.log('Thumbnail created at', tempLocalThumbFile)
-    // Uploading the Thumbnail.
-    return bucket.upload(tempLocalThumbFile, {destination: thumbFilePath, metadata: metadata})
-  }).then(() => {
-    console.log('Thumbnail uploaded to Storage at', thumbFilePath)
-    // Once the image has been uploaded delete the local files to free up disk space.
-    fs.unlinkSync(tempLocalFile)
-    fs.unlinkSync(tempLocalThumbFile)
-    // Get the Signed URLs for the thumbnail and original image.
-    const config = {
-      action: 'read',
-      expires: '03-01-2500'
-    }
-    return Promise.all([
-      thumbFile.getSignedUrl(config),
-      file.getSignedUrl(config)
-    ])
-  }).then((results) => {
-    console.log('Got Signed URLs.')
-    const thumbResult = results[0]
-    const originalResult = results[1]
-    const thumbFileUrl = thumbResult[0]
-    const fileUrl = originalResult[0]
-    // Add the URLs to the Database
-    // return admin.database().ref('images').push({path: fileUrl, thumbnail: thumbFileUrl})
-    return admin.firestore().collection('photos').doc(fileName.split('.')[0]).set({
-      thumbUrl: thumbFileUrl,
-      fullUrl: fileUrl,
-      uploaded: new Date()
+  return mkdirp(tempLocalDir)
+    .then(() => {
+      // Download file from bucket.
+      return file.download({ destination: tempLocalFile })
     })
-  }).then(() => console.log('Thumbnail URLs saved to database.'))
+    .then(() => {
+      console.log('The file has been downloaded to', tempLocalFile)
+      // Generate a thumbnail using ImageMagick.
+      return spawn(
+        'convert',
+        [
+          tempLocalFile,
+          '-thumbnail',
+          `${THUMB_MAX_WIDTH}x${THUMB_MAX_HEIGHT}>`,
+          tempLocalThumbFile
+        ],
+        { capture: ['stdout', 'stderr'] }
+      )
+    })
+    .then(() => {
+      console.log('Thumbnail created at', tempLocalThumbFile)
+      // Uploading the Thumbnail.
+      return bucket.upload(tempLocalThumbFile, {
+        destination: thumbFilePath,
+        metadata: metadata
+      })
+    })
+    .then(() => {
+      console.log('Thumbnail uploaded to Storage at', thumbFilePath)
+      // Once the image has been uploaded delete the local files to free up disk space.
+      fs.unlinkSync(tempLocalFile)
+      fs.unlinkSync(tempLocalThumbFile)
+      // Get the Signed URLs for the thumbnail and original image.
+      const config = {
+        action: 'read',
+        expires: '03-01-2500'
+      }
+      return Promise.all([
+        thumbFile.getSignedUrl(config),
+        file.getSignedUrl(config)
+      ])
+    })
+    .then(results => {
+      console.log('Got Signed URLs.')
+      const thumbResult = results[0]
+      const originalResult = results[1]
+      const thumbFileUrl = thumbResult[0]
+      const fileUrl = originalResult[0]
+      // Add the URLs to the Database
+      // return admin.database().ref('images').push({path: fileUrl, thumbnail: thumbFileUrl})
+      return admin
+        .firestore()
+        .collection('photos')
+        .doc(fileName.split('.')[0])
+        .set({
+          thumbUrl: thumbFileUrl,
+          fullUrl: fileUrl,
+          uploaded: new Date()
+        })
+    })
+    .then(() => console.log('Thumbnail URLs saved to database.'))
 })
-
+*/
 exports.writeFamiliesLog = functions.firestore
   .document('families/{familyId}')
-  .onWrite((event) => {
-    let familyId = event.params.familyId
-    let eventData = event.data.data()
-    let timestamp = new Date().toLocaleString(undefined, {timeZone: 'America/New_York', hour12: false})
+  .onWrite((change, context) => {
+    let familyId = context.params.familyId
+    let eventData = change.after.data()
+    let timestamp = new Date().toLocaleString(undefined, {
+      timeZone: 'America/New_York',
+      hour12: false
+    })
 
     let newData = {}
     newData[timestamp] = JSON.stringify(eventData)
     newData.name = eventData.name
 
-    return admin.firestore().collection('families-log').doc(familyId).set(newData, { merge: true })
+    return admin
+      .firestore()
+      .collection('families-log')
+      .doc(familyId)
+      .set(newData, { merge: true })
   })
 
 exports.writeGuestsLog = functions.firestore
   .document('guests/{guestId}')
-  .onWrite((event) => {
-    let guestId = event.params.guestId
-    let eventData = event.data.data()
-    let timestamp = new Date().toLocaleString(undefined, {timeZone: 'America/New_York', hour12: false})
+  .onWrite((change, context) => {
+    let guestId = context.params.guestId
+    let eventData = change.after.data()
+    let timestamp = new Date().toLocaleString(undefined, {
+      timeZone: 'America/New_York',
+      hour12: false
+    })
 
     let newData = {}
     newData[timestamp] = JSON.stringify(eventData)
     newData.name = eventData.name
 
-    return admin.firestore().collection('guests-log').doc(guestId).set(newData, { merge: true })
+    return admin
+      .firestore()
+      .collection('guests-log')
+      .doc(guestId)
+      .set(newData, { merge: true })
   })
 
 exports.serializeGuestIds = functions.firestore
   .document('guests/{guestId}')
-  .onCreate(event => {
-    let newestGuestId = event.params.guestId || 'none'
+  .onCreate((data, context) => {
+    let newestGuestId = context.params.guestId || 'none'
     // Get all guest data (id and name only)
-    admin.firestore().collection('guests').get().then(snap => {
-      let guestNamesAndIds = []
-      snap.docs.forEach(doc => {
-        let id = doc.id
-        let name = doc.get('name')
-        guestNamesAndIds.push({
-          id,
-          name
+    admin
+      .firestore()
+      .collection('guests')
+      .get()
+      .then(snap => {
+        let guestNamesAndIds = []
+        snap.docs.forEach(doc => {
+          let id = doc.id
+          let name = doc.get('name')
+          guestNamesAndIds.push({
+            id,
+            name
+          })
         })
+        admin
+          .firestore()
+          .collection('guest-names-ids')
+          .doc('guests')
+          .set({
+            all: JSON.stringify(guestNamesAndIds),
+            newest: newestGuestId,
+            updated: new Date()
+          })
       })
-      admin.firestore().collection('guest-names-ids').doc('guests').set({
-        all: JSON.stringify(guestNamesAndIds),
-        newest: newestGuestId,
-        updated: new Date()
-      })
-    })
     return true
   })
 
