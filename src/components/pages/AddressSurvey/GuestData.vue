@@ -4,11 +4,11 @@
     <md-radio id="rsvp-accept" v-model="guestRSVP" value="ACCEPT" @change="setRsvp" class="md-primary">Attending</md-radio>
     <md-radio id="rsvp-reject" v-model="guestRSVP" value="REJECT" @change="setRsvp" class="md-primary">Not attending</md-radio>
     <md-field v-if="guestRSVP === 'ACCEPT'" :md-counter="false">
-      <label for="song">Song request <small>(Optional)</small></label>
-      <md-input id="song" v-model="guestSong" @change="newGuestChange" maxlength="64"></md-input>
+      <label for="restrictions">Food restrictions <small>(Optional)</small></label>
+      <md-input id="restrictions" v-model="guestRestrictions" @change="newGuestChange" maxlength="64"></md-input>
     </md-field>
     <md-field v-if="guestRSVP === 'ACCEPT'" :md-counter="false">
-      <label for="comment">Comment <small>(Optional)</small></label>
+      <label for="comment">Comment <small>(Only visible to Peter and Steph)</small></label>
       <md-input id="comment" v-model="guestComment" @change="newGuestChange" maxlength="64"></md-input>
     </md-field>
 
@@ -26,7 +26,7 @@
         guestEmail: '',
         guestPhone: '',
         guestRSVP: this.guest.rsvp || '',
-        guestSong: this.guest.song || '',
+        guestRestrictions: this.guest.restrictions || '',
         guestComment: this.guest.comment || ''
       }
     },
