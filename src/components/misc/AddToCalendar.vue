@@ -23,8 +23,8 @@ export default {
     this.calendarInvites = createCalendar({
       data: {
         title: '♥ Steph and Peter\'s Wedding ♥',
-        start: new Date('June 1 2019, 16:00:00'),
-        end: new Date('June 1 2019, 23:00:00'),
+        start: new Date('2019-06-01T16:30:00-04:00'),
+        end: new Date('2019-06-01T23:00:00-04:00'),
         description: 'Steph and Peter are getting married!\n🎉💍👰️\nwww.steph-and-peter.com',
         address: '250 Concession 4 W, Millgrove, ON L8B 1J3'
       }

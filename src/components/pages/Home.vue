@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <h3 class="md-display-2">RSVP</h3>
-    <h3 class="md-title main-date">Saturday June 1, 2019 at 4:00pm <br/> <small>Hamilton, ON</small></h3>
+    <h3 class="md-title main-date">Saturday June 1, 2019 at 4:30pm <br/> <small>Hamilton, ON</small></h3>
     <!-- <Countdown></Countdown> -->
     <AddToCalendar class="block-centered" mountElem="add-to-calendar-home" />
 
@@ -23,25 +23,9 @@
       <Location></Location>
     </section>
 
-    <!-- <section id="registry">
-      <Registry></Registry>
-    </section> -->
-
     <section id="photos">
       <Photos></Photos>
     </section>
-
-    <section id="address-survey-2" v-if="submitRSVPButton.submitted === false">
-      <h3 class="md-display-2">Send my invite!</h3>
-      <p>Excited? So are we! Please make sure we can send your invitation to the correct address:</p>
-      <div class="address-survey-button-container">
-        <md-button class="address-survey-button md-primary md-raised" @click="showAddressSurvey=true">
-          <md-icon>mail</md-icon>
-          &nbsp; Submit address
-        </md-button>
-      </div>
-    </section>
-
 
     <md-dialog
       :md-active.sync="showAddressSurvey"
@@ -147,6 +131,8 @@ h3.md-display-2 {
     border-top: 1px solid rgba(0,0,0,0.5);
     border-bottom: 1px solid rgba(0,0,0,0.5);
     line-height: 80px;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 }
 .address-survey-button-container {
