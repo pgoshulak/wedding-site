@@ -8,8 +8,8 @@
 
     <h5 class="md-title">Earth to Table: The Farm</h5>
     <a :href="directionsHref" target="_blank">250 Concession 4 W, Millgrove, ON L8B 1J3</a> (just north of Hamilton)
-    
-    <p>The outdoor ceremony begins at 4:00pm, with indoor reception and dinner to follow. Dress code is semi-formal.</p>
+
+    <p>The outdoor ceremony begins at 4:30pm, with indoor reception and dinner to follow. Dress code is semi-formal.</p>
 
     <h5 class="md-title">Accomodations</h5>
     <p>We have reserved room blocks at the following hotels in nearby Hamilton. Please ask for Barraco/Goshulak wedding:</p>
@@ -18,7 +18,7 @@
       <li><a href="https://carmenshotel.com/">Carmen's Best Western</a></li>
       <li><a href="http://www.sheratonhamilton.com/?SWAQ=958P">Sheraton Hamilton</a></li>
     </ul>
-    
+
     <iframe :src="src" frameborder="0" allowfullscreen></iframe>
   </div>
 </template>
