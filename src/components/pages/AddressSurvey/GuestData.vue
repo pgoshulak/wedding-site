@@ -7,7 +7,7 @@
       <label for="restrictions">Food restrictions <small>(Optional)</small></label>
       <md-input id="restrictions" v-model="guestRestrictions" @change="newGuestChange" maxlength="64"></md-input>
     </md-field>
-    <md-field v-if="guestRSVP === 'ACCEPT'" :md-counter="false">
+    <md-field v-if="guestRSVP === 'ACCEPT' || guestRSVP === 'REJECT'" :md-counter="false">
       <label for="comment">Comment <small>(Only visible to Peter and Steph)</small></label>
       <md-input id="comment" v-model="guestComment" @change="newGuestChange" maxlength="64"></md-input>
     </md-field>
