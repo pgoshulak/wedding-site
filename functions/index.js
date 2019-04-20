@@ -190,10 +190,10 @@ exports.writeGuestsLog = functions.firestore
 
 exports.serializeGuestIds = functions.firestore
   .document('guests/{guestId}')
-  .onCreate((data, context) => {
+  .onWrite((data, context) => {
     let newestGuestId = context.params.guestId || 'none'
     // Get all guest data (id and name only)
-    admin
+    return admin
       .firestore()
       .collection('guests')
       .get()
@@ -207,17 +207,18 @@ exports.serializeGuestIds = functions.firestore
             name
           })
         })
+        let result = {
+          all: JSON.stringify(guestNamesAndIds),
+          newest: newestGuestId,
+          updated: new Date()
+        }
         admin
           .firestore()
           .collection('guest-names-ids')
           .doc('guests')
-          .set({
-            all: JSON.stringify(guestNamesAndIds),
-            newest: newestGuestId,
-            updated: new Date()
-          })
+          .set(result)
+        return result
       })
-    return true
   })
 
 exports.test = () => {
