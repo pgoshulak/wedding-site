@@ -12,21 +12,7 @@
         <div id="router-view-container">
           <router-view></router-view>
         </div>
-
-        <md-dialog
-          :md-active.sync="showRegistry"
-          :md-backdrop="true"
-          :md-close-on-esc="true"
-          :md-click-outside-to-close="true"
-          :md-fullscreen="true"
-          class="searchDialog"
-          >
-          <md-dialog-content>
-            <Registry></Registry>
-            <md-button @click="showRegistry = false" style="float:right">close</md-button>
-          </md-dialog-content>
-        </md-dialog>
-    <PageFooter />
+        <PageFooter />
       </md-content>
       <div class="spacer md-layout-item md-xsmall-hide"></div>
     </main>
@@ -38,19 +24,12 @@
 import BannerImage from './components/static/BannerImage.vue'
 import HeaderNav from './components/static/HeaderNav.vue'
 import PageFooter from './components/static/PageFooter.vue'
-import Registry from './components/pages/Registry.vue'
 export default {
   name: 'app',
   components: {
     BannerImage,
     HeaderNav,
-    PageFooter,
-    Registry
-  },
-  data () {
-    return {
-      showRegistry: false
-    }
+    PageFooter
   }
 }
 </script>

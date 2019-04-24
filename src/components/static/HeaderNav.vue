@@ -34,11 +34,6 @@ export default {
           id: 'photos-link',
           label: 'Photos',
           to: '/#photos'
-        },
-        {
-          id: 'registry-link',
-          label: 'Registry',
-          emit: 'showRegistry'
         }
       ]
     }
