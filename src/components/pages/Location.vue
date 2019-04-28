@@ -19,6 +19,19 @@
       <li><a href="http://www.sheratonhamilton.com/?SWAQ=958P">Sheraton Hamilton</a></li>
     </ul>
 
+    <h5 class="md-title">Transportation</h5>
+    <p>We have buses doing one pick up and several drop-offs at each hotel:</p>
+    <ul>
+      <li>Carmen's: 3:40</li>
+      <li>Visitor's Inn: between 3:40 and 3:55</li>
+      <li>Sheraton: between 3:40 and 3:55</li>
+    </ul>
+
+    <p>Departure times from the Farm will also be confirmed once we know how many people need to get to each hotel. 
+      Please make arrangements for safe and sober rides, whether it's with the buses on on your own. 
+      Note that Ubers and Taxis know where the Farm is so those are also options.</p>
+    <p>You CAN leave your vehicle at the Farm overnight, and pick it up by 11 am the next day</p>
+
     <iframe :src="src" frameborder="0" allowfullscreen></iframe>
   </div>
 </template>
