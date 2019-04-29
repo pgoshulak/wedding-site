@@ -20,16 +20,16 @@
     </ul>
 
     <h5 class="md-title">Transportation</h5>
-    <p>We have buses doing one pick up and several drop-offs at each hotel:</p>
+    <p><strong>SHUTTLE BUS: </strong>We have buses doing one pick up and several drop-offs at each hotel:</p>
     <ul>
-      <li>Carmen's: 3:40</li>
-      <li>Visitor's Inn: between 3:40 and 3:55</li>
-      <li>Sheraton: between 3:40 and 3:55</li>
+      <li>Carmen's: Pick up at <strong>3:40 pm</strong>, drop-offs TBC</li>
+      <li>Visitor's Inn: Pick up between <strong>3:40 and 3:55 pm </strong>, drop-offs TBC</li>
+      <li>Sheraton: Pick up between <strong>3:40 and 3:55 pm </strong>, drop-offs TBC</li>
     </ul>
 
-    <p>Departure times from the Farm will also be confirmed once we know how many people need to get to each hotel. 
-      Please make arrangements for safe and sober rides, whether it's with the buses on on your own. 
-      Note that Ubers and Taxis know where the Farm is so those are also options.</p>
+    <p><strong>DRIVING: </strong>
+      Please make arrangements for safe and sober rides, whether it's with the buses or on your own.
+      If you are looking to share a taxi/Uber, please let Steph or Peter know ahead of time and we can put you in touch with others in your area.</p>
     <p>You CAN leave your vehicle at the Farm overnight, and pick it up by 11 am the next day</p>
 
     <iframe :src="src" frameborder="0" allowfullscreen></iframe>
