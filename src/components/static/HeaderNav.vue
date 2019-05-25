@@ -16,19 +16,14 @@ export default {
     return {
       links: [
         {
-          id: 'home-link',
-          label: 'RSVP',
-          to: '/'
+          id: 'location-link',
+          label: 'Location',
+          to: '/#location'
         },
         {
           id: 'our-story-link',
           label: 'Our Story',
           to: '/#our-story'
-        },
-        {
-          id: 'location-link',
-          label: 'Location',
-          to: '/#location'
         },
         {
           id: 'photos-link',

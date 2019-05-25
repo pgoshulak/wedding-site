@@ -1,6 +1,5 @@
 <template>
   <div id="location">
-    <h3 class="md-display-2">Location</h3>
 
     <div id="farm-entrance">
       <img src="../../assets/farm_xxs.jpg" alt="Earth to Table: The Farm">
@@ -22,15 +21,16 @@
     <h5 class="md-title">Transportation</h5>
     <p><strong>SHUTTLE BUS: </strong>We have buses doing one pick up and several drop-offs at each hotel:</p>
     <ul>
-      <li>Carmen's: Pick up at <strong>3:40 pm</strong>, drop-offs TBC</li>
-      <li>Visitor's Inn: Pick up between <strong>3:40 and 3:55 pm </strong>, drop-offs TBC</li>
-      <li>Sheraton: Pick up between <strong>3:40 and 3:55 pm </strong>, drop-offs TBC</li>
+      <li>Carmen's: Pick up at <strong>3:40 pm</strong></li>
+      <li>Visitor's Inn: Pick up between <strong>3:40 and 3:55 pm </strong></li>
+      <li>Sheraton: Pick up between <strong>3:40 and 3:55 pm </strong></li>
     </ul>
+    <p>Shuttle buses for all hotels will depart The Farm at <strong>11:00 pm</strong>, <strong>12:00 am</strong>, and <strong>1:00 am</strong></p>
 
     <p><strong>DRIVING: </strong>
       Please make arrangements for safe and sober rides, whether it's with the buses or on your own.
       If you are looking to share a taxi/Uber, please let Steph or Peter know ahead of time and we can put you in touch with others in your area.</p>
-    <p>You CAN leave your vehicle at the Farm overnight, and pick it up by 11 am the next day</p>
+    <p>You may leave your vehicle at the Farm overnight, and pick it up by 11 am the next day</p>
 
     <iframe :src="src" frameborder="0" allowfullscreen></iframe>
   </div>

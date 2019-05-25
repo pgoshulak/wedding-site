@@ -1,46 +1,20 @@
 <template>
   <div id="home">
-    <h3 class="md-display-2">RSVP</h3>
-    <h3 class="md-title main-date">Saturday June 1, 2019 at 4:30pm <br/> <small>Hamilton, ON</small></h3>
+    <h3 class="md-display-1 main-date">Saturday June 1, 2019 at 4:30pm <br/> <small>Hamilton, ON</small></h3>
     <!-- <Countdown></Countdown> -->
     <AddToCalendar class="block-centered" mountElem="add-to-calendar-home" />
-
-    <section id="address-survey">
-      <p>We're very excited to celebrate our wedding with you! {{ submitRSVPButton.message }}</p>
-      <div class="address-survey-button-container">
-        <md-button class="address-survey-button md-primary md-raised" @click="showAddressSurvey=true">
-          <md-icon>mail</md-icon>
-          &nbsp; {{ submitRSVPButton.buttonText }}
-        </md-button>
-      </div>
+    <section id="location">
+      <Location></Location>
     </section>
 
     <section id="our-story">
       <OurStory></OurStory>
     </section>
 
-    <section id="location">
-      <Location></Location>
-    </section>
 
     <section id="photos">
       <Photos></Photos>
     </section>
-
-    <md-dialog
-      :md-active.sync="showAddressSurvey"
-      :md-backdrop="true"
-      :md-close-on-esc="false"
-      :md-click-outside-to-close="false"
-      :md-fullscreen="true"
-      class="searchDialog"
-      >
-      <md-dialog-content>
-        <AddressSurvey @closeAddressSurvey="showAddressSurvey=false" @addressSubmitted="setAddressSubmittedcookie"></AddressSurvey>
-      </md-dialog-content>
-    </md-dialog>
-
-
 
   </div>
 </template>
