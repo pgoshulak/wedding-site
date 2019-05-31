@@ -21,9 +21,9 @@
     <h5 class="md-title">Transportation</h5>
     <p><strong>SHUTTLE BUS: </strong>We have buses doing one pick up and several drop-offs at each hotel:</p>
     <ul>
-      <li>Carmen's: Pick up at <strong>3:40 pm</strong></li>
-      <li>Visitor's Inn: Pick up between <strong>3:40 and 3:55 pm </strong></li>
-      <li>Sheraton: Pick up between <strong>3:40 and 3:55 pm </strong></li>
+      <li>Carmen's: Pick up departing at <strong>3:45 pm</strong></li>
+      <li>Visitor's Inn: Pick up departing at <strong>3:55 pm</strong></li>
+      <li>Sheraton: Pick up departing at <strong>3:55 pm</strong></li>
     </ul>
     <p>Shuttle buses for all hotels will depart The Farm at <strong>11:00 pm</strong>, <strong>12:00 am</strong>, and <strong>1:00 am</strong></p>
 
